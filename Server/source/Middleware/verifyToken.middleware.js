@@ -9,7 +9,7 @@ const verifyToken = asyncHandler(async (req, res, next) => {
         const getrefreshToken = req.cookies?.refreshToken;
         if(!getrefreshToken){
             throw new ApiError(400, "refresh token not found")
-        }
+        } 
         const decodedToken = jwt.verify(getrefreshToken, process.env.REFRESH_TOKEN_SECRET);
         const user = await User.findById(decodedToken._id).select("-password -refreshToken");
         if(!user){

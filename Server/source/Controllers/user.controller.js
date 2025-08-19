@@ -10,7 +10,8 @@ import fs from 'fs'
 
 const cookieOption = {
     httpOnly: true,
-    secure: true
+    secure: true,
+    sameSite: "none",  
 }
 
 const registerUser = asyncHandler(async (req, res) => {
