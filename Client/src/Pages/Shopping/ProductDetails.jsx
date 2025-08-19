@@ -28,7 +28,7 @@ function ProductDetails() {
   const dispatch = useDispatch()
 
   const fetchProductData = async() => {
-    await getHandler(`http://localhost:8000/api/product/get-product/${productID}`)
+    await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/product/get-product/${productID}`)
       .then(res => {
         setProductData(res.data)
         console.log(res.data)
@@ -51,7 +51,7 @@ function ProductDetails() {
   const user = useSelector(state => state.auth)
 
   const fetchAllData = useCallback(async () => {
-    await getHandler('http://localhost:8000/api/feature/get-featured-product/home')
+    await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/feature/get-featured-product/home`)
       .then(res => {
         setFeaturedProductData(res.data);
       })

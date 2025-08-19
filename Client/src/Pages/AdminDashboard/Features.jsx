@@ -42,7 +42,7 @@ function Features() {
 
   const fetchData = async () => {
     setLoader(true)
-    await getHandler(`http://localhost:8000/api/feature/get-data/all-features`)
+    await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/feature/get-data/all-features`)
       .then((res) => {
         setData(res.data?.[0])
       })
@@ -58,7 +58,7 @@ function Features() {
     data.title.forEach(item => formData.append('title', item));
     data.tagline.forEach(item => formData.append('tagline', item));
     data.banner.forEach(item => formData.append('banner', item));
-    await postHandler('http://localhost:8000/api/feature/add-banner/title/tagline', formData)
+    await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/feature/add-banner/title/tagline`, formData)
       .then((res) => {
         toast.success(res?.message || 'All data saved for homepage banner')
       })
@@ -74,7 +74,7 @@ function Features() {
     data.allCategories?.map(item => {
       if (item.selected) formData.append("category", item._id)
     })
-    await postHandler('http://localhost:8000/api/feature/add-selected-category', formData)
+    await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/feature/add-selected-category`, formData)
       .then(res => {
         toast.success(res?.message || "Selected Category are Successfully featured in Home page")
       })
@@ -90,7 +90,7 @@ function Features() {
     data.advertisement.map(ele => {
       formData.append('ads', ele)
     })
-    await postHandler('http://localhost:8000/api/feature/add-advertisement', formData)
+    await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/feature/add-advertisement`, formData)
       .then((res) => {
         toast.success(res?.message || "Ads succesfully saved")
       })
@@ -106,7 +106,7 @@ function Features() {
     pagination.productDetails.map(item => {
       if (item.selected) formData.append("products", item._id)
     })
-    await postHandler('http://localhost:8000/api/feature/add-selected-product', formData)
+    await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/feature/add-selected-product`, formData)
       .then(res => {
         toast.success(res?.message || "Selected Products are Successfully featured in Home page")
       })
@@ -118,7 +118,7 @@ function Features() {
 
   const fetchProduct = async () => {
     setPaginationLoader(true)
-    await getHandler(`http://localhost:8000/api/feature/get-products-features?page=${page}&limit=10`)
+    await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/feature/get-products-features?page=${page}&limit=10`)
       .then(res => {
         setPagination(prev => ({
           isEnd: res?.data?.isEnd,

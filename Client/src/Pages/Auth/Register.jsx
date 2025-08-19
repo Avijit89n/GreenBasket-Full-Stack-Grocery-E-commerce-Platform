@@ -67,7 +67,7 @@ function Register() {
         eve.preventDefault();
         setLoading(true);
 
-        axios.post('http://localhost:8000/api/user/register', registerData)
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/register`, registerData)
         .then((res)=>{
             console.log(res.data);
             toast.success(res.data.message);

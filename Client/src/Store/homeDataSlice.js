@@ -12,9 +12,9 @@ const initialState = {
 export const getAllData = createAsyncThunk('get/home-data', async (_, { rejectWithValue }) => {
     try {
         const [dataRes, featuredProductRes, categoryRes] = await Promise.all([
-            getHandler('http://localhost:8000/api/feature/get-all-data/home'),
-            getHandler('http://localhost:8000/api/feature/get-featured-product/home'),
-            getHandler('http://localhost:8000/api/category/get-data/home')
+            getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/feature/get-all-data/home`),
+            getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/feature/get-featured-product/home`),
+            getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/category/get-data/home`)
         ]);
 
         return {

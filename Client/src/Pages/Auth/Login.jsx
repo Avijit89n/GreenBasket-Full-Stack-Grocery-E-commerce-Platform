@@ -45,7 +45,7 @@ function Login() {
     const onSubmit = async (eve) => {
         eve.preventDefault();
         dispatch(showLoader())
-        await postHandler('http://localhost:8000/api/user/login', loginData)
+        await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/user/login`, loginData)
             .then((res) => {
                 if (res) {
                     dispatch(login(res.data.user))

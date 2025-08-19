@@ -23,7 +23,7 @@ const sentCartItems = createAsyncThunk('send/cart-item', async (_, { getState, r
     })
 
     try {
-        const response = await postHandler('http://localhost:8000/api/cart/add-cart-item', formData)
+        const response = await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/cart/add-cart-item`, formData)
         return response
     } catch (error) {
         return rejectWithValue(error)
@@ -32,7 +32,7 @@ const sentCartItems = createAsyncThunk('send/cart-item', async (_, { getState, r
 
 const getCartItem = createAsyncThunk('get/cart-item', async (payload, { rejectWithValue }) => {
     try {
-        const response = await getHandler(`http://localhost:8000/api/cart/get-cart-item/${payload}`);
+        const response = await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/cart/get-cart-item/${payload}`);
         return response
     } catch (error) {
         return rejectWithValue(error)

@@ -199,7 +199,7 @@ export default function Dashboard() {
   }, []);
 
   const loadMetrics = async () => {
-    await getHandler('http://localhost:8000/api/data/data-sheet-revenue')
+    await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/data/data-sheet-revenue`)
       .then(res => {
         setMetrics(prev => [
           {
@@ -230,7 +230,7 @@ export default function Dashboard() {
   }
 
   const loadRevenueData = async () => {
-    await getHandler('http://localhost:8000/api/data/data-sheet-revenue-profit-graph')
+    await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/data/data-sheet-revenue-profit-graph`)
       .then(res => {
         setRevenueData(res.data)
       })
@@ -241,7 +241,7 @@ export default function Dashboard() {
   }
 
   const categorySales = async () => {
-    await getHandler('http://localhost:8000/api/data/category-sales')
+    await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/data/category-sales`)
       .then(res => {
         setCategoryData(res.data)
       })
@@ -253,7 +253,7 @@ export default function Dashboard() {
 
   const last24HourOrder = async () => {
     setLoading(true)
-    await getHandler('http://localhost:8000/api/data/last-hour-order')
+    await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/data/last-hour-order`)
       .then(res => {
         setData(res.data)
       })

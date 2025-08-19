@@ -64,7 +64,7 @@ function Profile() {
   const addAddress = async (e) => {
     setAddrLoad(true)
     e.preventDefault();
-    await postHandler(`http://localhost:8000/api/user/address/${user._id}`, {
+    await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/user/address/${user._id}`, {
       address: {
         name: addrData?.name || "",
         phone: [addrData?.phone, addrData?.alternetNum] || [],
@@ -95,7 +95,7 @@ function Profile() {
     setAddrLoad(true)
     e.preventDefault();
     console.log(addrData)
-    await postHandler(`http://localhost:8000/api/user/update-address/${user._id}?addressID=${addressID}`, {
+    await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/user/update-address/${user._id}?addressID=${addressID}`, {
       address: {
         name: addrData?.name || "",
         phone: [addrData?.phone, addrData?.alternetNum] || [],
@@ -125,7 +125,7 @@ function Profile() {
   const updatePassword = async (e) => {
     setPassLoad(true)
     e.preventDefault()
-    await postHandler(`http://localhost:8000/api/user/update-password/${user._id}`, { ...changePass })
+    await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/user/update-password/${user._id}`, { ...changePass })
       .then(res => {
         toast.success(res?.message || "Updated Successfully")
       })
@@ -149,7 +149,7 @@ function Profile() {
     formdata.append("email", data?.email || "")
     formdata.append("phoneNo", data?.phoneNumber || "")
     formdata.append("avatar", data?.avatar)
-    await postHandler(`http://localhost:8000/api/user/update-profile/${user._id}`, formdata)
+    await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/user/update-profile/${user._id}`, formdata)
       .then(res => {
         toast.success(res?.message || "Updated Successfully")
         dispatch(login(res?.data))
@@ -163,7 +163,7 @@ function Profile() {
   }
 
   const deleteAddress = async (addressID) => {
-    await getHandler(`http://localhost:8000/api/user/delete-address/${user._id}?addressID=${addressID}`)
+    await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/user/delete-address/${user._id}?addressID=${addressID}`)
       .then(res => {
         toast.success(res?.message || "Address deleted")
         dispatch(login(res.data))

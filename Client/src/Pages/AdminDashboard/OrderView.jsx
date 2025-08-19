@@ -74,7 +74,7 @@ const OrderView = () => {
     const handleSave = async () => {
         const formData = new FormData();
         formData.append("status", selectedData?.value ||"")
-        await postHandler(`http://localhost:8000/api/order/change-order-status/${orderID}`,formData)
+        await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/order/change-order-status/${orderID}`,formData)
         .then((res) => {
             toast.success(res?.message || "Order status updated successfully");
             setOrderDetails(prev => ({
@@ -88,7 +88,7 @@ const OrderView = () => {
     }
 
     const fetchOrderDetails = async () => {
-        await getHandler(`http://localhost:8000/api/order/get-order-details/${orderID}`)
+        await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/order/get-order-details/${orderID}`)
             .then(res => {
                 if (!res?.data) {
                     toast.error("No order details found");

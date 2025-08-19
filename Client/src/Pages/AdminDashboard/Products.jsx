@@ -53,7 +53,7 @@ export default function Products() {
 
   const fetchProductData = async () => {
     setPagination(true)
-    await getHandler(`http://localhost:8000/api/product/get-table-data/products?page=${page}&limit=10`)
+    await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/product/get-table-data/products?page=${page}&limit=10`)
       .then((res) => {
         setProductData(prev => ({
           isEnd: res.data.isEnd,
@@ -71,7 +71,7 @@ export default function Products() {
 
   const changeStatus = async (id) => {
     setLoading(true)
-    await getHandler(`http://localhost:8000/api/product/change-status/${id}`)
+    await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/product/change-status/${id}`)
     .then((res) => {
       toast.success(res.message || "Update successfull")
         setPage(1)
@@ -85,7 +85,7 @@ export default function Products() {
 
   const deleteProduct = async (id) => {
     setLoading(true)
-    await getHandler(`http://localhost:8000/api/product/delete-product/${id}`)
+    await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/product/delete-product/${id}`)
       .then((res) => {
         toast.success(res.message || "product successfully deleted")
         setPage(1)

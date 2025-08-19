@@ -98,7 +98,7 @@ function SubCategories() {
         formdata.append("status", data.status?.value || "status not selected");
         formdata.append("description", data.description);
 
-        await postHandler('http://localhost:8000/api/subcategory/add-subcategory', formdata)
+        await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/subcategory/add-subcategory`, formdata)
             .then((res) => {
                 toast.success(res.message || "Data added successfully")
                 setData(initialData)
@@ -112,7 +112,7 @@ function SubCategories() {
 
     const fetchData = async () => {
         setPaginationLoader(true)
-        await getHandler(`http://localhost:8000/api/subcategory/get-table-data/sub-category?page=${page}&limit=12`)
+        await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/subcategory/get-table-data/sub-category?page=${page}&limit=12`)
             .then(res => {
                 setTableData(prev => ({
                     isEnd: res.data?.isEnd,
@@ -130,7 +130,7 @@ function SubCategories() {
 
     const fetchCategory = async () => {
         setLoading(true)
-        getHandler(`http://localhost:8000/api/category/get-table-data/category`)
+        getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/category/get-table-data/category`)
             .then((res) => {
                 res.data?.map(item => {
                     setOption(prev => [...prev, { value: item._id, label: capitalize(item.name) }])
@@ -144,7 +144,7 @@ function SubCategories() {
 
     const deleteSubCategory = async (id) => {
         setLoading(true)
-        await getHandler(`http://localhost:8000/api/subcategory/delete-subcategory/${id}`)
+        await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/subcategory/delete-subcategory/${id}`)
             .then(res => {
                 toast.success(res.message || "Delete successfull")
                 setPage(1)
@@ -166,7 +166,7 @@ function SubCategories() {
             formdata.append("category", item.value || "")
         })
 
-        await postHandler(`http://localhost:8000/api/subcategory/edit-subcategory/${id}`, formdata)
+        await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/subcategory/edit-subcategory/${id}`, formdata)
             .then(res => {
                 toast.success(res.message || "Sub-Category successfully updated")
                 setPage(1)
@@ -181,7 +181,7 @@ function SubCategories() {
 
     const changeStatus = async (id) => {
         setLoading(true)
-        await getHandler(`http://localhost:8000/api/subcategory/change-status/${id}`)
+        await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/subcategory/change-status/${id}`)
             .then((res) => {
                 toast.success(res.message || "Update successfull")
                 setPage(1)

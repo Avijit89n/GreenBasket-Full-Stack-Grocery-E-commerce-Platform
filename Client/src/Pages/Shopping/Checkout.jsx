@@ -86,7 +86,7 @@ function Checkout() {
     addToCartItems.map(ele => {
       formData.append("productID", ele?.productData._id)
     })
-    await postHandler('http://localhost:8000/api/product/get-quantity', formData)
+    await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/product/get-quantity`, formData)
       .then(res => {
         dispatch(itemQuantityUpdate(res?.data))
       })
@@ -102,7 +102,7 @@ function Checkout() {
   const placeOrder = async (e) => {
     setLoading(true)
     e.preventDefault()
-    await postHandler('http://localhost:8000/api/order/add-orders', {
+    await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/order/add-orders`, {
       orderAddress: selectedAddress,
       orderPayment: selectedPayment,
       orderItems: addToCartItems.map((item) => ({

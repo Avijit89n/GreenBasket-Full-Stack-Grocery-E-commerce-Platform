@@ -177,11 +177,11 @@ function Lists() {
   useEffect(() => {
     if (!data.isEnd) {
       if (categoryID === "all") {
-        fetchData(`http://localhost:8000/api/product/get-product/page/limit?page=${page}&limit=9`);
+        fetchData(`${import.meta.env.VITE_BACKEND_URL}/api/product/get-product/page/limit?page=${page}&limit=9`);
       } else if (categoryID == 'featured') {
-        fetchData(`http://localhost:8000/api/feature/get-featured-product/home?page=${page}&limit=9`)
+        fetchData(`${import.meta.env.VITE_BACKEND_URL}/api/feature/get-featured-product/home?page=${page}&limit=9`)
       } else {
-        fetchData(`http://localhost:8000/api/category/get-product/category/${categoryID}?page=${page}&limit=9`)
+        fetchData(`${import.meta.env.VITE_BACKEND_URL}/api/category/get-product/category/${categoryID}?page=${page}&limit=9`)
       }
     }
   }, [page])

@@ -108,7 +108,7 @@ export default function AddProduct() {
 
     const fetchDataForCategory = async () => {
         setLoading(true)
-        await getHandler('http://localhost:8000/api/category/get-table-data/category')
+        await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/category/get-table-data/category`)
             .then((res) => {
                 setCategoryName(res.data)
             })
@@ -148,7 +148,7 @@ export default function AddProduct() {
             formData.append("variant", item?.value)
         })
 
-        await postHandler(`http://localhost:8000/api/product/add-product/${productID}`, formData)
+        await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/product/add-product/${productID}`, formData)
             .then((res) => {
                 toast.success(res.message || "product added successfully")
                 setdata(initialData)
@@ -163,7 +163,7 @@ export default function AddProduct() {
     }
 
     const handleVariant = async (id) => {
-        await getHandler(`http://localhost:8000/api/subcategory/get-variant/${id?.value || id}?currentProductID=${productID}`)
+        await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/subcategory/get-variant/${id?.value || id}?currentProductID=${productID}`)
             .then((res) => {
                 setvariantOption(res.data)
             })
@@ -174,7 +174,7 @@ export default function AddProduct() {
 
     const fetchInformation = async () => {
         setLoading(true)
-        await getHandler(`http://localhost:8000/api/product/edit-product/${productID}`)
+        await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/product/edit-product/${productID}`)
             .then((res) => {
                 handleVariant(res.data.category._id)
                 setdata({

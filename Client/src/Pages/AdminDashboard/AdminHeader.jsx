@@ -27,7 +27,7 @@ function AdminHeader() {
   const dispatch = useDispatch();
 
   const onLogout = async () => {
-    await postHandler('http://localhost:8000/api/user/logout')
+    await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/user/logout`)
       .then(res => {
         if (res) {
           dispatch(logout())

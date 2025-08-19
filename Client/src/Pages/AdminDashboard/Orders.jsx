@@ -27,7 +27,7 @@ export default function Orders() {
   const fetchData = async () => {
     setLoading(true)
     try {
-      const res = await getHandler(`http://localhost:8000/api/order/get-orders?page=${page}&limit=10`)
+      const res = await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/order/get-orders?page=${page}&limit=10`)
       setData(prev => ({
         isEnd: res.data?.isEnd,
         data: [

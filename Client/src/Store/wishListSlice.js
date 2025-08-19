@@ -20,7 +20,7 @@ export const addWishItems = createAsyncThunk('add/wish-Item', async (_, { getSta
     })
 
     try {
-        const response = await postHandler(`http://localhost:8000/api/wishlist/add-wishlist`, formdata)
+        const response = await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/wishlist/add-wishlist`, formdata)
         return response
     } catch (error) {
         return rejectWithValue(error?.message || "Failed to update the cart items")
@@ -29,7 +29,7 @@ export const addWishItems = createAsyncThunk('add/wish-Item', async (_, { getSta
 
 export const getWishItems = createAsyncThunk('get/wish-Item', async (payload, { rejectWithValue }) => {
     try {
-        const response = await getHandler(`http://localhost:8000/api/wishlist/get-wishlist/${payload}`);
+        const response = await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/wishlist/get-wishlist/${payload}`);
         return response
     } catch (error) {
         return rejectWithValue(error)

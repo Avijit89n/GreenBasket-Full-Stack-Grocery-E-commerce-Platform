@@ -41,7 +41,7 @@ function App() {
 
   const checkAuth = async () => {
     try {
-      const res = await getHandler('http://localhost:8000/api/user/refresh/access/token');
+      const res = await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/user/refresh/access/token`);
       dispatch(login(res.data));
     } catch (err) {
       dispatch(logout());
@@ -90,7 +90,7 @@ function App() {
           productID: ele.productData._id
         }))
       })
-      navigator.sendBeacon('http://localhost:8000/api/cart/add-cart-item', formData)
+      navigator.sendBeacon(`${import.meta.env.VITE_BACKEND_URL}/api/cart/add-cart-item`, formData)
     }
     if (wishList?.isNew) {
       const formData = new FormData()
@@ -98,7 +98,7 @@ function App() {
       wishList?.wishListItem?.map(item => {
         formData.append("products", item._id)
       })
-      navigator.sendBeacon('http://localhost:8000/api/wishlist/add-wishlist', formData)
+      navigator.sendBeacon(`${import.meta.env.VITE_BACKEND_URL}/api/wishlist/add-wishlist`, formData)
     }
   }
 

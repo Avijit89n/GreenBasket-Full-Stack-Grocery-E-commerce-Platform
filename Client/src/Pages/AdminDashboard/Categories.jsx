@@ -90,7 +90,7 @@ function Categories() {
     formdata.append("description", data.description);
     formdata.append("image", data.image);
 
-    await postHandler('http://localhost:8000/api/category/add-category', formdata)
+    await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/category/add-category`, formdata)
       .then(res => {
         toast.success(res.message)
         setData(initialData)
@@ -106,7 +106,7 @@ function Categories() {
 
   const deleteCategory = async (id) => {
     setLoading(true)
-    await getHandler(`http://localhost:8000/api/category/delete-category/${id}`)
+    await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/category/delete-category/${id}`)
       .then((res) => {
         toast.success(res.message || "Category deleted successfully")
         fetchData()
@@ -119,7 +119,7 @@ function Categories() {
 
   const changeStatus = async (id) => {
     setLoading(true)
-    await getHandler(`http://localhost:8000/api/category/change-status/${id}`)
+    await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/category/change-status/${id}`)
       .then((res) => {
         toast.success(res.message || "Update successfull")
         fetchData()
@@ -138,7 +138,7 @@ function Categories() {
     formdata.append("description", editData.description);
     formdata.append("image", editData.image);
 
-    await postHandler(`http://localhost:8000/api/category/edit-category/${id}`, formdata)
+    await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/category/edit-category/${id}`, formdata)
       .then((res) => {
         toast.success(res.message || "Category updated successfully")
         setEdit(false)
@@ -152,7 +152,7 @@ function Categories() {
 
   const fetchData = async () => {
     setLoading(true)
-    await getHandler('http://localhost:8000/api/category/get-table-data/category')
+    await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/category/get-table-data/category`)
       .then(res => {
         setTableData(res.data)
       })
