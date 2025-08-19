@@ -6,7 +6,6 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: "/GreenBasket-Full-Stack-Grocery-E-commerce-Platform",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
