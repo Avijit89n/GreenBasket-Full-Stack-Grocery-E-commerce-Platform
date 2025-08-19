@@ -15,18 +15,18 @@ function CheckUserIsAuth({ isAuthenticated, user, children }) {
     )) {
         return <Navigate to='/user/login' />;
     }
-    else if (isAuthenticated && (location.pathname.includes('login') || location.pathname.includes('register'))) {
+    if (isAuthenticated && (location.pathname.includes('login') || location.pathname.includes('register'))) {
         if (user.role === 'admin') {
             return <Navigate to='/admin/dashboard' />;
         } else {
             return <Navigate to='/shop/home' />;
         }
     }
-    else if (isAuthenticated && user.role === 'admin' && location.pathname.startsWith('/shop')) {
+    if (isAuthenticated && user.role === 'admin' && location.pathname.startsWith('/shop')) {
         return <Navigate to='/admin/dashboard' />;
     }
 
-    else if (isAuthenticated && user.role !== 'admin' && location.pathname.startsWith('/admin')) {
+    if (isAuthenticated && user.role !== 'admin' && location.pathname.startsWith('/admin')) {
         return <Navigate to='/unauthenticated' />;
     }
 
