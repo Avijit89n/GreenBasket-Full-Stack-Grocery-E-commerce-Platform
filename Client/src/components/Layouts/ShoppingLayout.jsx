@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import Navbar from '../Common/NAvbar';
+import Navbar from '../Common/Navbar';
 import Footer from '../Common/Footer';
 import { Outlet } from 'react-router-dom';
 import HomeLoader from '../Common/HomeLoader';
