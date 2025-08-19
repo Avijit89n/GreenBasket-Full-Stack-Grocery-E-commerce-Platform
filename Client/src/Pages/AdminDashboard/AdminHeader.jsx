@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import mainLogo from '../../assets/mainLogo.png'
+import mainLogo from '../../assets/mainlogo.png'
 import { AlignLeft, LayoutPanelLeft, Truck, Bell, Star, LogOut, Plus, Settings, ShoppingBag, UserRound, TriangleAlert, LayoutTemplate, Gauge } from 'lucide-react'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetDescription, SheetClose } from "@/components/ui/sheet"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, } from "@/components/ui/dropdown-menu"
