@@ -1,14 +1,16 @@
 {
   "name": "client",
-  "homepage": "https://greenbasket-full-stack-grocery-e-unhl.onrender.com/shop/home",
+  "homepage": "https://Avijit89n.github.io/GreenBasket-Full-Stack-Grocery-E-commerce-Platform/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build", 
+    "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy" : "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.11",
@@ -39,6 +41,7 @@
     "embla-carousel-react": "^8.6.0",
     "embla-carousel-wheel-gestures": "^8.0.2",
     "framer-motion": "^12.23.3",
+    "gh-pages": "^6.3.0",
     "lucide-react": "^0.479.0",
     "next-themes": "^0.4.6",
     "react": "^18.3.1",
