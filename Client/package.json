@@ -1,11 +1,12 @@
 {
   "name": "client",
+  "homepage": "https://greenbasket-full-stack-grocery-e-unhl.onrender.com/shop/home",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build", 
     "lint": "eslint .",
     "preview": "vite preview"
   },
