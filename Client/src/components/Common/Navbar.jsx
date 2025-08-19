@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import mainLogo from '../../assets/mainLogo.png'
+import mainLogo from '../../assets/mainlogo.png'
 import { ShoppingCart, CircleUser, Heart, LogOut, UserRound, Settings, Plus, TriangleAlert, Package, Languages, Lock, LogIn, User } from 'lucide-react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import MobileNav from './MobileNav'
