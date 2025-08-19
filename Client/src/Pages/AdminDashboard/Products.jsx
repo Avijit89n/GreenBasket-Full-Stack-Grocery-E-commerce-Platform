@@ -121,7 +121,7 @@ export default function Products() {
             <button className='flex items-center justify-center gap-1 bg-green-700 text-white text-sm hover:bg-green-800 py-2 px-5 rounded-md'><Plus size={18} strokeWidth={2} /> Add New</button>
           </Link>
         </div>
-        <Table>
+        <Table className={"text-base"}>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[120px]">Product</TableHead>
@@ -134,16 +134,16 @@ export default function Products() {
               <TableHead className="w-[100px] text-center">Action</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody className="text-sm">
+          <TableBody>
             {productData?.tableData?.map((product, index) => (
               <TableRow key={product._id}>
                 <TableCell className="font-medium">
                   {productData?.tableData?.length - 1 === index ?
                     <img ref={ref}
-                      className='p-1 h-12 w-12 object-contain border bg-gray-100 border-gray-200 rounded-md'
+                      className='p-1 h-16 w-16 object-contain border bg-gray-100 border-gray-200 rounded-md'
                       src={product.avatar} alt="" /> :
                     <img
-                      className='p-1 h-12 w-12 object-contain border bg-gray-100 border-gray-200 rounded-md'
+                      className='p-2 h-16 w-16 object-contain border bg-gray-100 border-gray-200 rounded-md'
                       src={product.avatar} alt="" />
                   }
                 </TableCell>
@@ -169,7 +169,7 @@ export default function Products() {
                 <TableCell className="text-center">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <button className="border border-gray-300 p-1 rounded-md hover:bg-blue-100 hover:text-blue-700 hover:border-blue-100">
+                      <button className="border m-3 border-gray-300 p-1 rounded-md hover:bg-blue-100 hover:text-blue-700 hover:border-blue-100">
                         <Settings size={18} strokeWidth={1} />
                       </button>
                     </DropdownMenuTrigger>

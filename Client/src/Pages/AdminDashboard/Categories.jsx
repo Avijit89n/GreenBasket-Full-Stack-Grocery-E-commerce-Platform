@@ -32,6 +32,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+import Loader2 from '@/components/Common/Loader2'
 
 const customStyles = {
   control: (provided) => ({
@@ -166,11 +167,11 @@ function Categories() {
     fetchData()
   }, [])
 
-  return loading ? <Loader /> : (
+  return (
     <div>
       <div className='p-2 font-sans'>
         <h1 className='mb-6 text-xl font-bold text-gray-700 X'>Category</h1>
-        <div className='flex lg:flex-row flex-col gap-2'>
+        <div className='flex lg:flex-row flex-col gap-2 '>
           <div className='bg-white lg:w-1/3 w-full p-4 rounded-md'>
             <h3 className='mb-5 font-semibold'>Add New Category</h3>
             <form onSubmit={(e) => submitData(e)} className='flex flex-col justify-center'>
@@ -234,7 +235,7 @@ function Categories() {
               <input className='p-2 text-sm rounded-md border-gray-300 border outline-none w-2/3' type="text" placeholder="Search here..." />
               <button className=' hover:bg-gray-200 cursor-pointer p-2 border rounded-md text-sm border-gray-300'><Search size={18} strokeWidth={1} /></button>
             </div>
-            <Table>
+            {loading ? <div className='flex justify-center items-center py-14'><Loader2 height={8} width={8}/></div> : <Table className={"text-base"}>
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-[100px]">Image</TableHead>
@@ -251,12 +252,12 @@ function Categories() {
                     <TableCell>
                       {item.image ? (
                         <img
-                          className="h-10 w-10 border border-gray-500 rounded-md object-cover"
+                          className="h-16 w-16 rounded-md object-cover"
                           src={item.image}
                           alt={item.name}
                         />
                       ) : (
-                        <div className="h-10 w-10 border border-gray-500 rounded-md bg-gray-200 flex items-center justify-center text-xs text-gray-600">
+                        <div className="h-16 w-16 border border-gray-500 rounded-md bg-gray-200 flex items-center justify-center text-xs text-gray-600">
                           N/A
                         </div>
                       )}
@@ -295,7 +296,7 @@ function Categories() {
                   </TableRow>
                 ))}
               </TableBody>
-            </Table>
+            </Table>}
             {tableData.length === 0 ?
               <div className='text-gray-400 text-sm flex justify-center items-center h-1/3 w-full'>
                 No Data Found

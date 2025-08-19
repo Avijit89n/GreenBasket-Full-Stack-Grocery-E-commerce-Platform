@@ -189,10 +189,10 @@ function Features() {
     });
   };
 
-  return loader ? <Loader /> : (
-    <div className='flex flex-col gap-10'>
+  return(
+    <>
+    {loader ? <div className='flex justify-center items-center py-14'><Loader2 height={8} width={8}/></div> : <div className='flex flex-col gap-10'>
 
-      {/* banner and other data */}
       <div className="flex flex-col gap-2 bg-gray-200 p-4 rounded-md">
         <div className="flex items-center justify-between bg-gray-100 px-6 py-4 rounded-md shadow border border-gray-300">
           <div>
@@ -340,7 +340,6 @@ function Features() {
         </div>
       </div>
 
-      {/* Advertisement */}
       <div className="flex flex-col gap-2 bg-gray-200 p-4 rounded-md">
         <div className="flex items-center justify-between bg-gray-100 px-6 py-4 rounded-md shadow border border-gray-300">
           <div>
@@ -434,7 +433,6 @@ function Features() {
         </div>
       </div>
 
-      {/* category */}
       <div className="flex flex-col gap-2 bg-gray-200 p-4 rounded-md">
         <div className="flex items-center justify-between bg-gray-100 px-6 py-4 rounded-md shadow border border-gray-300">
           <div>
@@ -485,7 +483,6 @@ function Features() {
         </div>
       </div>
 
-      {/* products */}
       <div className="flex flex-col gap-2 bg-gray-200 p-4 rounded-md">
         <div className="flex items-center justify-between bg-gray-100 px-6 py-4 rounded-md shadow border border-gray-300">
           <div>
@@ -548,7 +545,8 @@ function Features() {
       </div>
 
 
-    </div>
+    </div>}
+    </>
 
   );
 }

@@ -28,6 +28,7 @@ import { sentCartItems, getCartItem } from './Store/addToCartSlice'
 import Profile from './Pages/Shopping/Profile'
 import Wishlist from './Pages/Shopping/WishList'
 import { addWishItems, getWishItems } from './Store/wishListSlice'
+import OrderView from './Pages/AdminDashboard/OrderView'
 
 function App() {
   const navigate = useNavigate()
@@ -142,6 +143,7 @@ function App() {
         <Route exact path='products' element={<Products />} />
         <Route exact path='categories' element={<Categories />} />
         <Route exact path='sub-categories' element={<SubCategories />} />
+        <Route exact path='order-details/:orderID' element={<OrderView />} />
         <Route exact path='add-product/:productID' element={<AddProduct />} />
       </Route>
       <Route path='*' element={<PageNotFound />} />

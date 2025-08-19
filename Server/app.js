@@ -27,6 +27,7 @@ import subCategoryRouter from "./source/Routes/subCategory.router.js"
 import addCartRouter from "./source/Routes/addToCart.router.js"
 import WishListRouter from "./source/Routes/wishList.router.js"
 import orderRouter from "./source/Routes/orders.router.js"
+import dataSheetRouter from "./source/Routes/dataSheet.router.js"
 
 
 // routers
@@ -38,6 +39,7 @@ app.use('/api/subcategory', subCategoryRouter)
 app.use('/api/cart', addCartRouter)
 app.use('/api/wishlist', WishListRouter)
 app.use('/api/order', orderRouter)
+app.use('/api/data', dataSheetRouter)
 
 
 

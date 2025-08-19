@@ -160,4 +160,105 @@ const getTabledata = asyncHandler(async (req, res) => {
         )
 })
 
-export { addOrders, getTabledata }
+const getOrderDetails = asyncHandler(async (req, res) => {
+    const orderID = req.params.orderID
+    if (!orderID) {
+        return res.status(400)
+            .json(
+                new ApiResponse(400, "Order ID is required", null, false)
+            )
+    }
+    const orderDetails = await Order.aggregate([
+        {
+            $match: { _id: new mongoose.Types.ObjectId(orderID) }
+        },
+        {
+            $lookup: {
+                from: "products",
+                let: { productIdArray: "$products" },
+                pipeline: [
+                    {
+                        $match: {
+                            $expr: {
+                                $in: ["$_id", "$$productIdArray.productId"]
+                            }
+                        }
+                    }
+                ],
+                as: "productDetails"
+            }
+        },
+        {
+            $lookup: {
+                from: "users",
+                localField: "user",
+                foreignField: "_id",
+                pipeline: [
+                    {
+                        $project: {
+                            fullName: 1,
+                            avatar: 1,
+                            userName: 1,
+                            email: 1,
+                            phoneNo: 1
+                        }
+                    }
+                ],
+                as: "userData"
+            }
+        },
+        {
+            $unwind: "$userData"
+        },
+        {
+            $project: {
+                _id: 1,
+                user: "$userData",
+                address: 1,
+                paymentMethod: 1,
+                products: 1,
+                productDetails: 1,
+                orderValue: 1,
+                status: 1,
+                createdAt: 1,
+                updatedAt: 1
+            }
+        }
+    ]);
+    if (!orderDetails) {
+        return res.status(404)
+            .json(
+                new ApiResponse(404, "Order not found", null, false)
+            )
+    }
+    return res.status(200)
+        .json(
+            new ApiResponse(200, "Order details fetched successfully", orderDetails?.at(0), true)
+        )  
+}) 
+
+const changeStatus = asyncHandler(async(req, res) => {
+    const { status } = req.body;
+    const orderID = req.params.orderID;
+
+
+    if(!orderID || !status) {
+        return res.status(400)
+            .json(
+                new ApiResponse(400, "Required fields are not reached")
+            )
+    }
+    const findOrder = await Order.findByIdAndUpdate(orderID, {status});
+    if(!findOrder) {
+        return res.status(400)
+            .json(
+                new ApiResponse(400, "Dailed to find the order ID", {}, false)
+            )
+    }
+    return res.status(200)
+        .json(
+            new ApiResponse(200, "Order status changed successfully", findOrder, true)
+        )
+})
+
+export { addOrders, getTabledata, getOrderDetails, changeStatus }

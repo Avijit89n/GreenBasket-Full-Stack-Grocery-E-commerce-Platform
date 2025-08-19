@@ -14,6 +14,7 @@ import { ChevronsRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllData } from '@/Store/homeDataSlice';
+import { Badge } from '@/components/ui/badge';
 
 const highlightText = (text) => {
   if (!text) return '';
@@ -44,7 +45,6 @@ function Home() {
   return (
     <div className='mb-15'>
 
-      {/* banner */}
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex gap-2">
           {data?.banner?.map((item, index) =>
@@ -72,7 +72,6 @@ function Home() {
         </div>
       </div>
 
-      {/* categories */}
       <div className='flex flex-col md:gap-3 lg:gap-4 gap-5 mt-10 px-4 sm:px-6 md:px-8 lg:px-12'>
         <p className="text-3xl font-semibold">Categories</p>
         <div className='grid sm:grid-cols-[repeat(auto-fill,minmax(130px,1fr))] grid-cols-4 gap-3' >
@@ -85,8 +84,28 @@ function Home() {
         </div>
       </div>
 
-      {/* featured products */}
-      <div className='flex flex-col md:gap-3 lg:gap-4 gap-5 mt-20 px-4 sm:px-6 md:px-8 lg:px-12'>
+      <div className="flex flex-wrap justify-center items-center gap-6 mt-10 px-4 sm:px-6 lg:px-12">
+        {data?.advertisement?.slice(0, 2).map((ad, index) => (
+          <div
+            key={index}
+            className="relative w-full sm:w-[48%] lg:w-[700px] rounded-xl overflow-hidden group"
+          >
+            <img
+              src={ad}
+              alt={`advertisement-${index + 1}`}
+              className="h-full w-full object-contain rounded-md transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute top-3 left-3">
+              <Badge className="bg-primary/90 text-white px-3 py-1 text-xs rounded-full shadow-md">
+                Advertisement
+              </Badge>
+            </div>
+          </div>
+        ))}
+      </div>
+
+
+      <div className='flex flex-col md:gap-3 lg:gap-4 gap-5 mt-10 px-4 sm:px-6 md:px-8 lg:px-12'>
         <div className='flex items-center justify-between flex-wrap'>
           <p className="text-3xl font-semibold">Featured Products</p>
           <TooltipProvider>
@@ -109,7 +128,6 @@ function Home() {
         </HorizontalCarousel>
       </div>
 
-      {/* category product showcase */}
       {data?.allcategory?.map(item =>
         <div key={item._id} className='flex flex-col md:gap-3 lg:gap-4 gap-5 mt-20 px-4 sm:px-6 md:px-8 lg:px-12'>
           <div className='flex items-center justify-between flex-wrap'>
