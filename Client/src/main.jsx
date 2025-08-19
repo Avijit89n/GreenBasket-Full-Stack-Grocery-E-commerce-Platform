@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
 createRoot(document.getElementById('root')).render(
-    <BrowserRouter basename='/shop/home'>
+    <BrowserRouter >
       <Provider store={store} >
         <App />
         <Toaster position="bottom-right" reverseOrder={false} />

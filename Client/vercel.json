@@ -1,8 +1,9 @@
 {
-  "rewrites": [
+  "redirects": [
     {
-      "source": "/shop/home/(.*)",
-      "destination": "/shop/home/"
+      "source": "/shop/home",
+      "destination": "/",
+      "permanent": false
     }
   ]
 }
