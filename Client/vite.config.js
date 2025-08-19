@@ -6,6 +6,7 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  base: "/shop/home",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -15,6 +16,6 @@ export default defineConfig({
     host: true,
     watch:{
       usePolling: true
-    }
-  }
+    },
+  },
 })
