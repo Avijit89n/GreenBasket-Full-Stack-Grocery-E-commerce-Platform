@@ -1,5 +1,8 @@
 {
   "rewrites": [
-    { "source": "/shop/home/(.*)", "destination": "/" }
+    {
+      "source": "/shop/home/(.*)",
+      "destination": "/shop/home/"
+    }
   ]
 }
