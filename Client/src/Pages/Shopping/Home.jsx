@@ -62,7 +62,7 @@ function Home() {
                     }}
                   />
                   <p className="mt-1 sm:mt-4 w-2/3 text-xs sm:text-sm md:text-ms lg:text-lg text-gray-600">{data.tagline[index]}</p>
-                  <button className="bg-green-950 text-white text-xs sm:text-sm px-4 sm:px-6 py-1 sm:py-2 mt-2 md:mt-5 rounded-sm md:rounded-md w-fit">
+                  <button onClick={()=>navigate('/shop/lists/all')} className="bg-green-950 text-white text-xs sm:text-sm px-4 sm:px-6 py-1 sm:py-2 mt-2 md:mt-5 rounded-sm md:rounded-md w-fit">
                     Shop Now
                   </button>
                 </div>

@@ -12,6 +12,7 @@ import {
   Banknote,
   Delete,
   Trash2,
+  LocateFixed,
 } from "lucide-react";
 import { clearCart, decrement, increment, itemQuantityUpdate, removeItemFromCart } from "@/Store/addToCartSlice";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +20,17 @@ import postHandler from "@/Services/Post.Service";
 import toast from "react-hot-toast";
 import OrderPlaced from "@/components/Common/OrderPlaced";
 import Loader2 from "@/components/Common/Loader2";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { login } from "@/Store/authSlice";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 
 const paymentOptions = [
@@ -48,6 +60,21 @@ const paymentOptions = [
   },
 ];
 
+
+
+const initialAddr = {
+  name: "",
+  phone: "",
+  pincode: "",
+  locality: "",
+  address: "",
+  city: "",
+  state: "",
+  landmark: "",
+  alternetNum: "",
+  adrType: ""
+}
+
 function Checkout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -59,8 +86,42 @@ function Checkout() {
   const [selectedPayment, setSelectedPayment] = useState("");
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
   const [loading, setLoading] = useState(false)
-  const [orderDetails, setOrderDetails] = useState("") 
+  const [orderDetails, setOrderDetails] = useState("")
   const [holdPrice, setHoldPrice] = useState(0)
+  const [open, setOpen] = useState(false)
+  const [addrLoad, setAddrLoad] = useState(false)
+  const [addrData, setAddrData] = useState(initialAddr)
+
+
+  const addAddress = async (e) => {
+    setAddrLoad(true)
+    e.preventDefault();
+    await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/user/address/${user.user._id}`, {
+      address: {
+        name: addrData?.name || "",
+        phone: [addrData?.phone, addrData?.alternetNum] || [],
+        pincode: addrData?.pincode || "",
+        locality: addrData?.locality || "",
+        address: addrData?.address || "",
+        city: addrData?.city || "",
+        state: addrData?.state || "",
+        adrType: addrData?.adrType || "",
+        landmark: addrData?.landmark || "",
+      }
+    })
+      .then(res => {
+        toast.success(res?.message || "Address added successfully")
+        dispatch(login(res?.data))
+        setOpen(false)
+      })
+      .catch((err) => {
+        toast.error("Failed to add the address. Check all the required fields are filled")
+      })
+      .finally(() => {
+        setAddrData(initialAddr)
+        setAddrLoad(false)
+      })
+  }
 
   useEffect(() => {
     setTotalPrice(
@@ -125,7 +186,7 @@ function Checkout() {
         setLoading(false)
       })
   }
-  if(isOrderPlaced) return <OrderPlaced details={orderDetails} deliveryCharge={deliveryCharge} handlingCharge={handlingCharge} subtotal={holdPrice} />
+  if (isOrderPlaced) return <OrderPlaced details={orderDetails} deliveryCharge={deliveryCharge} handlingCharge={handlingCharge} subtotal={holdPrice} />
   return (
     <div className="min-h-screen bg-gray-50">
       {addToCartItems.length > 0 ?
@@ -134,7 +195,7 @@ function Checkout() {
             <div className="lg:col-span-2 space-y-4">
               <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
                 <div className="px-6 py-4 border-b border-gray-200">
-                  <h2 className="text-lg font-medium text-gray-900">Select Delivery Address</h2>
+                  <h2 className="text-lg font-medium text-gray-900">Select Delivery Address<span className="text-red-500">*</span></h2>
                 </div>
                 <div className="p-6 space-y-3">
                   {user?.user?.address?.map((addr) => (
@@ -174,15 +235,111 @@ function Checkout() {
                       </div>
                     </div>
                   ))}
-                  <button className="w-full p-3 border-2 border-dashed border-gray-300 rounded-md text-green-600 hover:border-green-500 transition-colors">
-                    + Add a new address
-                  </button>
+
+                  <Dialog open={open} onOpenChange={setOpen}>
+                    <form >
+                      <DialogTrigger asChild>
+                        <button
+                          className="w-full p-3 border-2 border-dashed border-gray-300 rounded-md text-green-600 hover:border-green-500 transition-colors">
+                          + Add a new address
+                        </button>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Add a new Address</DialogTitle>
+                          <DialogDescription></DialogDescription>
+
+                          <div className='flex flex-col gap-4 my-3'>
+                            <div className='flex gap-4 items-center flex-wrap'>
+                              <button type='button' onClick={() => console.log("abc")}
+                                className='flex justify-center items-center gap-2 bg-emerald-600 py-2 px-2 sm:px-4 text-sm text-white font-semibold rounded-md'>
+                                <LocateFixed height={18} width={18} /> Use Current Location
+                              </button>
+                            </div>
+                            <div className='flex gap-4 items-center flex-wrap'>
+                              <div className='flex flex-col gap-1 text-sm grow'>
+                                <label htmlFor="name">Name<span className='text-red-600'>*</span></label>
+                                <input required value={addrData.name} onChange={(e) => setAddrData(prev => ({ ...prev, name: e.target.value }))} type="text" id='name' className='rounded-md p-2 border text-gray-500 border-gray-300 outline-none' placeholder='Enter your Name' />
+                              </div>
+                              <div className='flex flex-col gap-1 text-sm grow'>
+                                <label htmlFor="Phone">Phone<span className='text-red-600'>*</span></label>
+                                <input required value={addrData.phone} onChange={(e) => setAddrData(prev => ({ ...prev, phone: e.target.value }))} type="number" id='Phone' className='rounded-md p-2 border text-gray-500 border-gray-300 outline-none' placeholder='Enter your Phone Number' />
+                              </div>
+                            </div>
+                            <div className='flex gap-4 items-center flex-wrap'>
+                              <div className='flex flex-col gap-1 text-sm grow'>
+                                <label htmlFor="pincode">Pincode<span className='text-red-600'>*</span></label>
+                                <input required value={addrData.pincode} onChange={(e) => setAddrData(prev => ({ ...prev, pincode: e.target.value }))} type="text" id='pincode' className='rounded-md p-2 border text-gray-500 border-gray-300 outline-none' placeholder='Enter your Pincode' />
+                              </div>
+                              <div className='flex flex-col gap-1 text-sm grow'>
+                                <label htmlFor="locality">Locality<span className='text-red-600'>*</span></label>
+                                <input required value={addrData.locality} onChange={(e) => setAddrData(prev => ({ ...prev, locality: e.target.value }))} type="text" id='locality' className='rounded-md p-2 border text-gray-500 border-gray-300 outline-none' placeholder='Enter your Locality' />
+                              </div>
+                            </div>
+                            <div className='flex gap-4 items-center flex-wrap'>
+                              <div className='flex flex-col gap-1 text-sm grow'>
+                                <label htmlFor="address">Address<span className='text-red-600'>*</span></label>
+                                <textarea value={addrData.address} onChange={(e) => setAddrData(prev => ({ ...prev, address: e.target.value }))} id='address' className='min-h-20 rounded-md p-2 border border-gray-300 outline-none' placeholder='Enter your Address(Area or Street)' />
+                              </div>
+                            </div>
+                            <div className='flex gap-4 items-center flex-wrap'>
+                              <div className='flex flex-col gap-1 text-sm grow'>
+                                <label htmlFor="city">City/District/Town<span className='text-red-600'>*</span></label>
+                                <input required value={addrData.city} onChange={(e) => setAddrData(prev => ({ ...prev, city: e.target.value }))} type="text" id='city' className='rounded-md p-2 border text-gray-500 border-gray-300 outline-none' placeholder='Enter your City/District/Town' />
+                              </div>
+                              <div className='flex flex-col gap-1 text-sm grow'>
+                                <label htmlFor="state">State<span className='text-red-600'>*</span></label>
+                                <input required value={addrData.state} onChange={(e) => setAddrData(prev => ({ ...prev, state: e.target.value }))} type="text" id='state' className='rounded-md p-2 border text-gray-500 border-gray-300 outline-none' placeholder='Enter yout State' />
+                              </div>
+                            </div>
+                            <div className='flex gap-4 items-center flex-wrap'>
+                              <div className='flex flex-col gap-1 text-sm grow'>
+                                <label htmlFor="landmark">Landmark<span className="text-gray-500 text-xs italic"> (Optional)</span></label>
+                                <input value={addrData.landmark} onChange={(e) => setAddrData(prev => ({ ...prev, landmark: e.target.value }))} type="text" id='landmark' className='rounded-md p-2 border text-gray-500 border-gray-300 outline-none' placeholder='Enter landmark' />
+                              </div>
+                              <div className='flex flex-col gap-1 text-sm grow'>
+                                <label htmlFor="Alternate_phone">Alternate Phone<span className="text-gray-500 text-xs italic"> (Optional)</span></label>
+                                <input value={addrData.alternetNum} onChange={(e) => setAddrData(prev => ({ ...prev, alternetNum: e.target.value }))} type="number" id='Alternate_phone' className='rounded-md p-2 border text-gray-500 border-gray-300 outline-none' placeholder='Enter phone number' />
+                              </div>
+                            </div>
+                            <div className='flex gap-2 justify-center flex-wrap flex-col'>
+                              <label className='text-sm'>Address Type<span className='text-red-600'>*</span></label>
+                              <div className='flex gap-5 text-gray-500 items-center mx-2'>
+                                <div className='flex gap-1 text-sm'>
+                                  <input type='radio' checked={addrData?.adrType === "Home"} name='adrType' id='home' value="Home" onChange={(e) => setAddrData(prev => ({ ...prev, adrType: e.target.value }))} />
+                                  <label htmlFor="home">Home</label>
+                                </div>
+                                <div className='flex gap-1 text-sm'>
+                                  <input type='radio' checked={addrData?.adrType === "Work"} name='adrType' id='work' value="Work" onChange={(e) => setAddrData(prev => ({ ...prev, adrType: e.target.value }))} />
+                                  <label htmlFor="work">Work</label>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+
+                        </DialogHeader>
+                        <DialogFooter>
+                          <div className='flex gap-4 items-center flex-wrap mt-5'>
+                            {!addrLoad ?
+                              <button onClick={(e) => addAddress(e)} type='button' className='bg-emerald-600 text-white py-2 px-6 rounded-md'>Save</button> :
+                              <div className='bg-emerald-600 py-2 rounded-md px-7'>
+                                <Loader2 height={6} width={6} />
+                              </div>}
+                            <DialogClose asChild>
+                              <button type='button' disabled={addrLoad} className='bg-emerald-600 text-white py-2 px-6 rounded-md'>Cancel</button>
+                            </DialogClose>
+                          </div>
+                        </DialogFooter>
+                      </DialogContent>
+                    </form>
+                  </Dialog>
                 </div>
               </div>
 
               <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
                 <div className="px-6 py-4 border-b border-gray-200">
-                  <h2 className="text-lg font-semibold text-gray-900">Payment Methods</h2>
+                  <h2 className="text-lg font-semibold text-gray-900">Select Payment Methods<span className="text-red-500">*</span></h2>
                 </div>
 
                 <div className="p-6 space-y-4">
@@ -195,8 +352,8 @@ function Checkout() {
                         key={method.id}
                         onClick={() => setSelectedPayment(method.id)}
                         className={`flex items-start p-4 border rounded-md cursor-pointer transition-colors ${isSelected
-                            ? "border-emerald-500 bg-emerald-50"
-                            : "border-gray-200 hover:border-gray-300"
+                          ? "border-emerald-500 bg-emerald-50"
+                          : "border-gray-200 hover:border-gray-300"
                           }`}
                       >
                         <input
@@ -240,12 +397,12 @@ function Checkout() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between gap-2 flex-wrap">
-                          <h3 className="font-medium text-gray-900 text-sm mb-1 line-clamp-2 flex items-center gap-2">
-                            {item.productData.name.replace(/\b\w/g, (char) => char.toUpperCase())}
-                            {item?.productData?.quantity === 0 && <p className="text-red-500 font-semibold">(Out of Stock)</p>}
-                          </h3>
-                          <button onClick={() => dispatch(removeItemFromCart
-                            (item?.productData))} className="p-1.5 rounded-md bg-red-100 text-red-500"><Trash2 height={18} width={18}/></button>
+                            <h3 className="font-medium text-gray-900 text-sm mb-1 line-clamp-2 flex items-center gap-2">
+                              {item.productData.name.replace(/\b\w/g, (char) => char.toUpperCase())}
+                              {item?.productData?.quantity === 0 && <p className="text-red-500 font-semibold">(Out of Stock)</p>}
+                            </h3>
+                            <button onClick={() => dispatch(removeItemFromCart
+                              (item?.productData))} className="p-1.5 rounded-md bg-red-100 text-red-500"><Trash2 height={18} width={18} /></button>
                           </div>
                           <p className="text-xs text-gray-500 mb-2">
                             by{" "}
@@ -351,12 +508,16 @@ function Checkout() {
                     </p>
                   </div>
 
-                 {!loading ? <button
+                  {!loading ? <button
+                    disabled={!selectedAddress || !selectedPayment || loading}
                     onClick={placeOrder}
-                    className="w-full bg-orange-500 text-white py-3 rounded-md hover:bg-orange-600 transition-colors font-medium">
+                    className={`w-full text-white py-3 rounded-md transition-colors font-medium
+                      ${!selectedAddress || !selectedPayment
+                        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                        : "bg-orange-500 text-white hover:bg-orange-600"}`}>
                     PLACE ORDER
                   </button> :
-                  <div className="w-full bg-orange-500 p-2 rounded-md flex justify-center items-center"><Loader2 height={8} width={8}/></div>}
+                    <div className="w-full bg-orange-500 p-2 rounded-md flex justify-center items-center"><Loader2 height={8} width={8} /></div>}
 
                   <div className="flex items-center justify-center gap-2 mt-4 text-xs text-gray-500 text-center">
                     <Shield size={14} />

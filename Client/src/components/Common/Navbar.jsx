@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import mainLogo from '../../assets/mainlogo.png'
-import { ShoppingCart, CircleUser, Heart, LogOut, UserRound, Settings, Plus, TriangleAlert, Package, Languages, Lock, LogIn, User } from 'lucide-react'
+import { ShoppingCart, Bell, CircleUser, Heart, LogOut, UserRound, Settings, Plus, TriangleAlert, Package, Languages, Lock, LogIn, User } from 'lucide-react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import MobileNav from './MobileNav'
 import { Badge } from '../ui/badge'
@@ -115,9 +115,8 @@ function Navbar() {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className={"p-2"} onClick={() => navigate(`/shop/edit/profile/${user?.user?._id}`)}> <UserRound /> My Account</DropdownMenuItem>
-                <DropdownMenuItem className={"p-2"}> <Package /> My Orders </DropdownMenuItem>
-                <DropdownMenuItem className={"p-2"}> <Languages /> Language</DropdownMenuItem>
-                <DropdownMenuItem className={"p-2"}> <Settings /> Settings </DropdownMenuItem>
+                <DropdownMenuItem className={"p-2"} onClick={() => navigate(`/shop/my-orders/${user?.user?._id}`)} > <Package /> My Orders </DropdownMenuItem>
+                <DropdownMenuItem className={"p-2"} onClick={() => toast.error("Sorry this features is not available yet")}> <Languages /> Language</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => setOpen(true)}>
                   < LogOut color='#E5484D' /> <span className='text-[#E5484D]'>Sign out</span>
@@ -141,7 +140,7 @@ function Navbar() {
                 <AlertDialogAction className={'bg-red-500 hover:bg-red-600 cursor-pointer'} onClick={onLogout}>Yes, I'm sure</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
-          </AlertDialog>
+          </AlertDialog> 
 
           <div className='md:hidden flex items-center justify-center p-1'>
             <MobileNav />

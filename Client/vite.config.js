@@ -12,6 +12,7 @@ export default defineConfig({
     },
   },
   server:{
+    open: '/shop/home',
     host: true,
     watch:{
       usePolling: true

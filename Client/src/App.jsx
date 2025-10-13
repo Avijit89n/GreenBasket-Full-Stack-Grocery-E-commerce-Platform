@@ -1,4 +1,4 @@
-import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { createBrowserRouter, createRoutesFromElements, Navigate, Route, RouterProvider, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Login from './Pages/Auth/Login'
 import Register from './Pages/Auth/Register'
 import DashBoard from './Pages/AdminDashboard/DashBoard'
@@ -29,6 +29,7 @@ import Profile from './Pages/Shopping/Profile'
 import Wishlist from './Pages/Shopping/WishList'
 import { addWishItems, getWishItems } from './Store/wishListSlice'
 import OrderView from './Pages/AdminDashboard/OrderView'
+import MyOrders from './Pages/Shopping/MyOrders'
 
 function App() {
   const navigate = useNavigate()
@@ -59,8 +60,10 @@ function App() {
     }
   }, [userDetails?.user?._id])
 
-  useEffect(() => {
+  useEffect(() =>{
     checkAuth();
+  }, [])
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
@@ -105,8 +108,12 @@ function App() {
 
   return (
     <Routes>
+      <Route path="/" element={<Navigate to="/shop/home" replace />} />
       <Route exact path='/shop' element={
-        <CheckUserIsAuth isAuthenticated={userDetails.isAuthenticate} user={userDetails.user}>
+        <CheckUserIsAuth 
+          key={userDetails.isAuthenticate?.role}
+          isAuthenticated={userDetails.isAuthenticate} 
+          user={userDetails.user}>
           <ShoppingLayout />
         </ CheckUserIsAuth >
       }>
@@ -116,6 +123,7 @@ function App() {
         <Route exact path='accounts' element={<Account />} />
         <Route exact path='about' element={<About />} />
         <Route exact path='contact' element={<Contact />} />
+        <Route exact path='my-orders/:userID' element={<MyOrders />} />
         <Route exact path='edit/profile/:userID' element={<Profile />} />
         <Route exact path='wishlist' element={<Wishlist />} />
         <Route exact path='product-details/:productID' element={<ProductDetails />} />
@@ -133,7 +141,10 @@ function App() {
       } />
 
       <Route exact path='/admin' element={
-        <CheckUserIsAuth isAuthenticated={userDetails.isAuthenticate} user={userDetails.user}>
+        <CheckUserIsAuth 
+          key={userDetails.isAuthenticate?.role}
+          isAuthenticated={userDetails.isAuthenticate} 
+          user={userDetails.user}>
           <AdminLayout />
         </CheckUserIsAuth>
       }>

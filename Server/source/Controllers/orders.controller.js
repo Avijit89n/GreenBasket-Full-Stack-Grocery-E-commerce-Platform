@@ -234,22 +234,22 @@ const getOrderDetails = asyncHandler(async (req, res) => {
     return res.status(200)
         .json(
             new ApiResponse(200, "Order details fetched successfully", orderDetails?.at(0), true)
-        )  
-}) 
+        )
+})
 
-const changeStatus = asyncHandler(async(req, res) => {
+const changeStatus = asyncHandler(async (req, res) => {
     const { status } = req.body;
     const orderID = req.params.orderID;
 
 
-    if(!orderID || !status) {
+    if (!orderID || !status) {
         return res.status(400)
             .json(
                 new ApiResponse(400, "Required fields are not reached")
             )
     }
-    const findOrder = await Order.findByIdAndUpdate(orderID, {status});
-    if(!findOrder) {
+    const findOrder = await Order.findByIdAndUpdate(orderID, { status });
+    if (!findOrder) {
         return res.status(400)
             .json(
                 new ApiResponse(400, "Dailed to find the order ID", {}, false)
@@ -261,4 +261,55 @@ const changeStatus = asyncHandler(async(req, res) => {
         )
 })
 
-export { addOrders, getTabledata, getOrderDetails, changeStatus }
+const getUserMyOrder = asyncHandler(async (req, res) => {
+    const userID = req.params.userID
+    const orderDEtails = await Order.aggregate([
+        {
+            $match: {
+                user: new mongoose.Types.ObjectId(userID)
+            }
+        },
+        {
+            $lookup: {
+                from: "products",
+                let: { productIdArray: "$products" },
+                pipeline: [
+                    {
+                        $match: {
+                            $expr: {
+                                $in: ["$_id", "$$productIdArray.productId"]
+                            }
+                        }
+                    }, {
+                        $project: {
+                            avatar: 1,
+                            name: 1
+                        }
+                    }
+                ],
+                as: "productDetails"
+            }
+        },
+        {
+            $project: {
+                orderValue: 1,
+                status: 1,
+                productDetails: 1,
+                createdAt: 1,
+                products: { $size: "$products" },
+
+            }
+        },
+        {
+            $sort: {
+                createdAt: -1
+            }
+        }
+    ])
+    return res.status(200)
+        .json(
+            new ApiResponse(200, "Order fetched successfully", orderDEtails, true)
+        )
+})
+
+export { addOrders, getTabledata, getOrderDetails, changeStatus, getUserMyOrder }

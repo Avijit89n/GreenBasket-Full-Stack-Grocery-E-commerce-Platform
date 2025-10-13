@@ -15,7 +15,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import postHandler from '@/Services/Post.Service'
 import { useDispatch } from 'react-redux'
 import { logout } from '@/Store/authSlice';
@@ -25,14 +25,13 @@ import toast from 'react-hot-toast'
 function AdminHeader() {
   const [open, setOpen] = useState(false)
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onLogout = async () => {
     await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/user/logout`)
       .then(res => {
-        if (res) {
-          dispatch(logout())
-          toast.success(res.message)
-        }
+        dispatch(logout())
+        toast.success(res.message)
       })
       .catch(err => {
         toast.error(err.response?.message || 'Logout Failed. please try again')

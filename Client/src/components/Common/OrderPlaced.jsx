@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { CheckCircle, Eye, Home, Package, CreditCard, MapPin, Clock, IndianRupee } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const OrderPlaced = ({details, deliveryCharge, handlingCharge, subtotal}) => {
   const [mounted, setMounted] = useState(false);
   const navigate = useNavigate();
+  const user = useSelector(state=>state.auth.user)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -93,13 +95,13 @@ const OrderPlaced = ({details, deliveryCharge, handlingCharge, subtotal}) => {
                 </div>
                 <div className="p-6 space-y-3">
                   <button
-                    onClick={() => navigate('/orders')}
+                    onClick={() => navigate(`/shop/my-orders/${user?._id}`)}
                     className="w-full bg-orange-400 hover:bg-orange-500 text-white py-2 px-4 rounded text-sm font-medium transition-colors duration-200 flex items-center justify-center space-x-2"
                   >
                     <Eye className="w-4 h-4" />
                     <span>My Orders</span>
                   </button>
-                  
+                   
                   <button
                     onClick={() => navigate('/shop/home')}
                     className="w-full bg-white hover:bg-gray-50 text-gray-700 py-2 px-4 rounded border border-gray-300 hover:border-gray-400 text-sm font-medium transition-all duration-200 flex items-center justify-center space-x-2"
