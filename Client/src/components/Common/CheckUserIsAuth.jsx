@@ -21,7 +21,7 @@ function CheckUserIsAuth({ isAuthenticated, user, children }) {
         } else {
             return <Navigate to='/shop/home' replace/>;
         }
-    }
+    } 
     if (isAuthenticated && user.role === 'admin' && location.pathname.startsWith('/shop')) {
         return <Navigate to='/admin/dashboard' replace/>;
     }
