@@ -34,11 +34,11 @@ export default function Contact() {
             </div>
             <div className="flex items-start gap-3">
               <Phone className="text-green-600 w-5 h-5 mt-1" />
-              <p><strong>Quick Support:</strong> +91 98765 43210</p>
+              <p><strong>Quick Support:</strong> +91 1234567890</p>
             </div>
             <div className="flex items-start gap-3">
               <Mail className="text-green-600 w-5 h-5 mt-1" />
-              <p><strong>Email:</strong> help@grocerydrop.in</p>
+              <p><strong>Email:</strong> help@greenbusket.com</p>
             </div>
             <div className="flex items-start gap-3">
               <Clock className="text-green-600 w-5 h-5 mt-1" />

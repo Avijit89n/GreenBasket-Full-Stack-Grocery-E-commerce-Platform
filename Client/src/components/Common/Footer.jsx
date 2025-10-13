@@ -87,15 +87,15 @@ function Footer() {
                         <div className="space-y-3 text-sm text-gray-300">
                             <p className="flex items-start">
                                 <MapPin className="w-4 h-4 mt-1 mr-2 text-green-400" />
-                                <span>151/18 muktapukur, Barrackpore, 700123</span>
+                                <span>123 Main Street, Kolkata, WB</span>
                             </p>
                             <p className="flex items-center">
                                 <Phone className="w-4 h-4 mr-2 text-green-400" />
-                                +91 74390 96094
+                                +91 1234567890
                             </p>
                             <p className="flex items-center">
                                 <Mail className="w-4 h-4 mr-2 text-green-400" />
-                                avijit89n@gmail.com
+                                help@greenbusket.com
                             </p>
                         </div>
                     </div>

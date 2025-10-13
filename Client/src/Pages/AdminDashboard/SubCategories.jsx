@@ -282,7 +282,7 @@ function SubCategories() {
                             <input className='p-2 text-sm rounded-md border-gray-300 border outline-none w-2/3' type="text" placeholder="Search here..." />
                             <button className=' hover:bg-gray-200 cursor-pointer p-2 border rounded-md text-sm border-gray-300'><Search size={18} strokeWidth={1} /></button>
                         </div>
-                        {loading ? <div className='flex justify-center items-center py-14'><Loader2 height={8} width={8}/></div> :<Table className={"text-base"}>
+                        <Table className={"text-base"}>
                             <TableHeader>
                                 <TableRow>
                                     <TableHead className="w-[200px]">Name</TableHead>
@@ -326,7 +326,7 @@ function SubCategories() {
                                     </TableRow>
                                 ))}
                             </TableBody>
-                        </Table>}
+                        </Table>
 
                         {paginationLoader ?
                             <div className='w-full flex justify-center items-center p-5'><Loader2 height={7} width={7} /></div> : ""
