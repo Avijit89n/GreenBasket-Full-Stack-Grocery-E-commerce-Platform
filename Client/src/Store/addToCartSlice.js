@@ -10,6 +10,7 @@ const initialState = {
 
 const sentCartItems = createAsyncThunk('send/cart-item', async (_, { getState, rejectWithValue }) => {
     const allState = getState()
+    if(!allState.auth.isAuthenticate) return null;
     const cartItems = allState.addToCart.cartItems
     const user = allState.auth.user
 
@@ -20,7 +21,7 @@ const sentCartItems = createAsyncThunk('send/cart-item', async (_, { getState, r
             quantity: ele?.quantity,
             productID: ele.productData._id
         }))
-    })
+    }) 
 
     try {
         const response = await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/cart/add-cart-item`, formData)
@@ -82,6 +83,9 @@ const addToCart = createSlice({
             state.cartItems = [];
             state.isNew = true
         },
+        clearOnLogoutCart: (state, action) => {
+            state.cartItems = [];
+        },
         removeItemFromCart: (state, action) => {
             state.cartItems = state.cartItems.filter(item => item?.productData?._id !== action.payload._id)
             state.isNew = true
@@ -114,6 +118,6 @@ const addToCart = createSlice({
 })
 
 
-export const { increment, decrement, clearCart, removeItemFromCart, itemQuantityUpdate } = addToCart.actions
+export const { increment, decrement, clearCart, removeItemFromCart, itemQuantityUpdate, clearOnLogoutCart } = addToCart.actions
 export { sentCartItems, getCartItem }
 export default addToCart.reducer

@@ -20,6 +20,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { clearOnLogoutCart, sentCartItems } from '@/Store/addToCartSlice'
+import { addWishItems, clearOnLogoutWishlist } from '@/Store/wishListSlice'
 
 
 
@@ -30,13 +32,23 @@ function Navbar() {
   const user = useSelector(state => state.auth)
   const totalCart = useSelector(state => state.addToCart.cartItems)?.length
   const totalWishList = useSelector(state => state.wishList.wishListItem)?.length
+  const { isNew, cartItems } = useSelector(state => state.addToCart)
+  const wishList = useSelector(state => state.wishList)
 
 
   const onLogout = async () => {
+    if(isNew && cartItems.length > 0) {
+      dispatch(sentCartItems())
+    }
+    if (wishList?.isNew && wishList.wishListItem?.length > 0) {
+      dispatch(addWishItems())
+    }
     await postHandler(`${import.meta.env.VITE_BACKEND_URL}/api/user/logout`)
       .then(res => {
         if (res) {
           dispatch(logout())
+          dispatch(clearOnLogoutCart())
+          dispatch(clearOnLogoutWishlist())
           toast.success(res.message)
         }
       })
@@ -87,26 +99,26 @@ function Navbar() {
             Contact Us
           </NavLink>
         </nav>
-        <div className='flex items-center gap-4'>
-          <Link to={"/shop/wishlist"}>
+        <div className='flex items-center md:gap-4 gap-2'>
+          {user.isAuthenticate && <Link to={"/shop/wishlist"}>
             <div className="hidden md:flex relative items-center justify-center">
               <Heart size={22} className="text-gray-800" />
               {totalWishList > 0 && <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full text-xs bg-green-600 text-white">{totalWishList}</Badge>}
             </div>
-          </Link>
-          <Link to={"/shop/checkout"}>
-            <div className="hidden md:flex relative items-center justify-center">
+          </Link>}
+          {user.isAuthenticate && <Link to={"/shop/checkout"}>
+            <div className="flex relative items-center justify-center">
               <ShoppingCart size={22} className="text-gray-800" />
               {totalCart > 0 && <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full text-xs bg-green-600 text-white">{totalCart}</Badge>}
             </div>
-          </Link>
+          </Link>}
           {user.isAuthenticate ?
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <Avatar className={`${ user?.user?.avatar ? "border-0" : "border-2 border-gray-700"} h-6 w-6`}>
+                <Avatar className={`${user?.user?.avatar ? "border-0" : "border-2 border-gray-700"} hidden md:flex h-6 w-6`}>
                   <AvatarImage src={user?.user?.avatar} />
                   <AvatarFallback asChild>
-                  <User size={22} className="text-gray-800" />
+                    <User size={22} className="text-gray-800" />
                   </AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
@@ -140,7 +152,7 @@ function Navbar() {
                 <AlertDialogAction className={'bg-red-500 hover:bg-red-600 cursor-pointer'} onClick={onLogout}>Yes, I'm sure</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
-          </AlertDialog> 
+          </AlertDialog>
 
           <div className='md:hidden flex items-center justify-center p-1'>
             <MobileNav />

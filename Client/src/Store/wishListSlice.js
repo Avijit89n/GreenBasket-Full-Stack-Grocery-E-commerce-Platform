@@ -10,6 +10,7 @@ const initialState = {
 
 export const addWishItems = createAsyncThunk('add/wish-Item', async (_, { getState, rejectWithValue }) => {
     const state = getState();
+    if(!state.auth.isAuthenticate) return null;
     const user = state.auth.user
     const wishList = state.wishList.wishListItem
 
@@ -55,6 +56,9 @@ const wishListSlice = createSlice({
             state.wishListItem = [];
             state.isNew = true
             toast.success("Cleared all Items from Wish List")
+        },
+        clearOnLogoutWishlist: (state, action) => {
+            state.wishListItem = [];
         }
     },
     extraReducers: (builder) => {
@@ -74,5 +78,5 @@ const wishListSlice = createSlice({
     }
 })
 
-export const { wishListManage, clearWishList } = wishListSlice.actions;
+export const { wishListManage, clearWishList, clearOnLogoutWishlist } = wishListSlice.actions;
 export default wishListSlice.reducer

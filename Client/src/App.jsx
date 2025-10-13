@@ -84,7 +84,7 @@ function App() {
   }, [wishList?.isNew])
 
   window.onbeforeunload = () => {
-    if (isNew) {
+    if (isNew && userDetails.isAuthenticate) {
       const formData = new FormData()
       formData.append("userID", userDetails?.user?._id)
       cartItems.map(ele => {
@@ -95,7 +95,7 @@ function App() {
       })
       navigator.sendBeacon(`${import.meta.env.VITE_BACKEND_URL}/api/cart/add-cart-item`, formData)
     }
-    if (wishList?.isNew) {
+    if (wishList?.isNew && userDetails.isAuthenticate) {
       const formData = new FormData()
       formData.append("userID", userDetails?.user?._id)
       wishList?.wishListItem?.map(item => {
