@@ -187,7 +187,7 @@ function Lists() {
   }, [page])
 
   return (
-    <div className={`flex gap-3 m-3`}>
+    <div className={`flex gap-3 m-3`} >
       <div className='bg-white w-[300px] hidden md:block lg:block max-h-[1300px] p-5 rounded-md'>
         <h1 className='text-xl  font-bold border-b py-3 border-gray-300 flex gap-2 items-center'><SlidersHorizontal size={18} />Filters</h1>
         <Accordion
@@ -196,14 +196,14 @@ function Lists() {
           defaultValue={["item-1"]}
         >
           <AccordionItem value="item-1">
-            <AccordionTrigger className='text-sm text-gray-600'>CATEGORY</AccordionTrigger>
+            <AccordionTrigger className='text-sm text-gray-800'>CATEGORY</AccordionTrigger>
             <AccordionContent className="flex flex-col gap-4 text-balance">
               <div className='max-h-[410px] overflow-scroll border-l-3 border-amber-400'>
                 {categories.map(item =>
                   <div key={item.id}>
-                    <div className='px-2 text-slate-400 font-medium mt-5 mb-1'>{item.name}</div>
+                    <div className='px-2 text-slate-600 font-medium mt-5 mb-1'>{item.name}</div>
                     {item.subcategories.map(sub =>
-                      <label htmlFor={sub.id} key={sub.id} className='cursor-pointer px-4 py-1 rounded-tr-md rounded-br-md hover:bg-amber-100 hover:text-slate-700 text-gray-400 flex gap-2 items-center'>
+                      <label htmlFor={sub.id} key={sub.id} className='cursor-pointer px-4 py-1 rounded-tr-md rounded-br-md hover:bg-amber-100 hover:text-slate-800 text-gray-600 flex gap-2 items-center'>
                         <input className='accent-amber-500' type="checkbox" id={sub.id} />
                         <span >{sub.name}</span>
                       </label>
