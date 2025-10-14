@@ -16,6 +16,7 @@ function capitalize(str) {
 const ProductCart2 = ({ productData }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isloaded, setIsLoaded] = useState(false);
   const addToCartProductDetails = useSelector((state) =>
     state.addToCart?.cartItems?.find(item =>
       item.productData?._id === productData._id
@@ -32,12 +33,16 @@ const ProductCart2 = ({ productData }) => {
       if (["button", "svg", "path", "section", "h3"].includes(tag)) return;
       navigate(`/shop/product-details/${productData._id}`);
     }}
-      className="relative group bg-white border border-gray-200 rounded-2xl shadow-sm p-4 
-           cursor-pointer flex flex-col justify-between h-full transition-none"
+      className={`relative group bg-white border border-gray-200 rounded-2xl shadow-sm p-4 
+          cursor-pointer flex flex-col justify-between h-full transition-all duration-500 ease-out
+          ${isloaded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3"}`}
+
 
     >
       <div className="bg-gray-50 rounded-xl p-3 flex items-center justify-center h-44 overflow-hidden">
         <img
+          onLoad={() => setIsLoaded(true)}
+          loading="lazy"
           src={productData?.avatar || ""}
           alt={productData?.name || ""}
           className="h-full object-contain"

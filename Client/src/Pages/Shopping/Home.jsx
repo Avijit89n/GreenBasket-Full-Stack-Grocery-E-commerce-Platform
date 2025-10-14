@@ -45,7 +45,7 @@ function Home() {
   }, [])
 
   useEffect(() => {
-    if (imageCount === category?.length + data.banner?.length) {
+    if (imageCount === category?.length + data.banner?.length + data.advertisement?.length) {
       setloading(false);
     }
   }, [imageCount])
@@ -103,6 +103,8 @@ function Home() {
               className="relative w-full sm:w-[48%] lg:w-[700px] rounded-xl overflow-hidden group"
             >
               <img
+                loading='lazy'
+                onLoad={() => serImageCount(prev => prev + 1)}
                 src={ad}
                 alt={`advertisement-${index + 1}`}
                 className="h-full w-full object-contain rounded-md transition-transform duration-500 group-hover:scale-105"

@@ -187,7 +187,7 @@ function Lists() {
   }, [page])
 
   return (
-    <div className='flex gap-3 m-3'>
+    <div className={`flex gap-3 m-3 ${loading ? "opacity-0" : "opacity-100"} transition-opacity duration-500`}>
       <div className='bg-white w-[300px] hidden md:block lg:block max-h-[1300px] p-5 rounded-md'>
         <h1 className='text-xl  font-bold border-b py-3 border-gray-300 flex gap-2 items-center'><SlidersHorizontal size={18} />Filters</h1>
         <Accordion
@@ -271,8 +271,14 @@ function Lists() {
         <div className='grid gap-5 grid-cols-[repeat(auto-fit,minmax(230px,1fr))]'>
           {data.productDetails?.map((item, index) => (
             data.productDetails.length - 1 === index ?
-              <div ref={ref} key={item._id} className='max-w-[500px] sm:max-w-[350px]'><ProductCart2 productData={item} /></div> :
-              <div key={item._id} className='max-w-[500px] sm:max-w-[350px]'><ProductCart2 productData={item} /></div>
+              <div ref={ref} key={item._id} 
+                className='opacity-0 max-w-[500px] sm:max-w-[350px] animate-fade-in-scale duration-700'
+                style={{ animationDelay: `${(index - ((page - 1) * 9)) * 100}ms` }}
+              ><ProductCart2 productData={item} /></div> :
+              <div key={item._id} 
+                className='opacity-0 max-w-[500px] sm:max-w-[350px] animate-fade-in-scale duration-700'
+                style={{ animationDelay: `${(index - ((page - 1) * 9)) * 100}ms` }}
+              ><ProductCart2 productData={item} /></div>
           ))}
         </div>
         {loading ?
