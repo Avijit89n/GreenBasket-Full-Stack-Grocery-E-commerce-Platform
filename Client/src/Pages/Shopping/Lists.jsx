@@ -187,7 +187,7 @@ function Lists() {
   }, [page])
 
   return (
-    <div className={`flex gap-3 m-3 ${loading ? "opacity-0" : "opacity-100"} transition-opacity duration-500`}>
+    <div className={`flex gap-3 m-3`}>
       <div className='bg-white w-[300px] hidden md:block lg:block max-h-[1300px] p-5 rounded-md'>
         <h1 className='text-xl  font-bold border-b py-3 border-gray-300 flex gap-2 items-center'><SlidersHorizontal size={18} />Filters</h1>
         <Accordion
