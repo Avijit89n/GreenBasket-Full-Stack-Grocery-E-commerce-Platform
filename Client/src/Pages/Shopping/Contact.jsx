@@ -8,22 +8,15 @@ export default function Contact() {
 
   useEffect(() => {
     if (mapLoaded) {
-      // Use a brief timeout (e.g., 500ms) to ensure a smooth transition and prevent the loader from flashing
-      const timer = setTimeout(() => {
-        setLoading(false);
-      }, 500);
-
-      return () => clearTimeout(timer); // Cleanup the timer
+      setLoading(false);
     }
   }, [mapLoaded]);
 
   return (
     <>
-      {/* Loader */}
       {loading && <Loader3 />}
-
-      {/* Main Content */}
-      <section className="bg-gray-50">
+      
+      <section className={`bg-gray-50 ${loading ? "opacity-0" : "opacity-100"} transition-opacity duration-500`}>
         <div className="w-full h-[400px]">
           <iframe
             title="Our Location"
@@ -36,7 +29,6 @@ export default function Contact() {
         </div>
 
         <div className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-start">
-          {/* Contact Details */}
           <div className="space-y-6">
             <h2 className="text-3xl font-bold text-gray-800">
               Need Help with Your Grocery Order?
@@ -88,7 +80,6 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Contact Form */}
           <div className="bg-white shadow-md border border-gray-200 rounded-xl p-8">
             <h3 className="text-xl font-semibold text-gray-800 mb-4">
               Send Us a Message

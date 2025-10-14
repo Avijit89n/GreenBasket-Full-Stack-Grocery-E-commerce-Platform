@@ -5,30 +5,13 @@ import Loader3 from "@/components/Common/Loader3";
 export default function About() {
   const [loading, setLoading] = useState(true);
 
-  // 🔸 Loader effect — waits for all images/assets to load
-  useEffect(() => {
-    const handlePageLoad = () => {
-      setTimeout(() => setLoading(false), 300); // small delay for smooth fade
-    };
-
-    if (document.readyState === "complete") {
-      handlePageLoad();
-    } else {
-      window.addEventListener("load", handlePageLoad);
-      return () => window.removeEventListener("load", handlePageLoad);
-    }
-  }, []);
-
   return (
     <div className="relative">
-      {/* 🔸 Fullscreen Loader */}
       {loading && <Loader3/>}
 
-      {/* 🔸 Actual About Page Content */}
       <div
         className={`${loading ? "opacity-0" : "opacity-100"} transition-opacity duration-500`}
       >
-        {/* Hero Section */}
         <section className="bg-gradient-to-r from-green-600 to-green-400 text-white py-16 px-6 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">About Us</h1>
           <p className="max-w-2xl mx-auto text-lg opacity-90">
@@ -36,9 +19,9 @@ export default function About() {
           </p>
         </section>
 
-        {/* Mission Section */}
         <section className="py-16 px-6 max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
           <img
+            onLoad={() => setLoading(false)}
             src={bannerImager}
             alt="Grocery Delivery"
             className="rounded-2xl shadow-lg w-full object-cover"
