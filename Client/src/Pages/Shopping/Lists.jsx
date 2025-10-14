@@ -272,11 +272,11 @@ function Lists() {
           {data.productDetails?.map((item, index) => (
             data.productDetails.length - 1 === index ?
               <div ref={ref} key={item._id} 
-                className='opacity-0 max-w-[500px] sm:max-w-[350px] animate-fade-in-scale duration-700'
+                className='opacity-0 max-w-[500px] sm:max-w-[350px] animate-fade-in-scale duration-200'
                 style={{ animationDelay: `${(index - ((page - 1) * 9)) * 100}ms` }}
               ><ProductCart2 productData={item} /></div> :
               <div key={item._id} 
-                className='opacity-0 max-w-[500px] sm:max-w-[350px] animate-fade-in-scale duration-700'
+                className='opacity-0 max-w-[500px] sm:max-w-[350px] animate-fade-in-scale duration-200'
                 style={{ animationDelay: `${(index - ((page - 1) * 9)) * 100}ms` }}
               ><ProductCart2 productData={item} /></div>
           ))}

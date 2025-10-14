@@ -1,7 +1,7 @@
 import ProductCart2 from '@/components/Common/ProductCart2'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Heart, ShoppingBag } from 'lucide-react'
+import { Delete, Heart, ShoppingBag, Trash2, X } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { clearWishList } from '@/Store/wishListSlice'
 
@@ -40,19 +40,18 @@ function WishList() {
               </div>
               
               <div className='flex gap-3'>
-                <button onClick={() => dispatch(clearWishList())} className='px-6 py-2 hover:bg-white border border-gray-300 rounded-lg text-gray-700 transition-colors'>
-                  Clear All
-                </button>
-                <button className='px-6 py-2 bg-orange-700 text-white rounded-lg hover:bg-orange-600 transition-colors'>
-                  Add All to Cart
+                <button onClick={() => dispatch(clearWishList())} className='flex gap-2 items-center justify-center px-6 py-2 hover:bg-red-200 cursor-pointer border border-red-300 rounded-lg font-semibold text-red-700 bg-red-100 transition-colors'>
+                  <Trash2 height={18} width={18}/> Clear All
                 </button>
               </div>
             </div>
 
-            <div className='bg-white rounded-xl border border-gray-200 p-6'>
+            <div className='bg-white shadow-lg rounded-xl border border-gray-200 p-6'>
               <div className='grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-6'>
-                {wishListItems?.map(ele =>
-                  <div key={ele._id} className='group'>
+                {wishListItems?.map((ele, index) =>
+                  <div key={ele._id} className='opacity-0 group animate-fade-in-scale duration-200'
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
                     <ProductCart2 productData={ele} />
                   </div>
                 )}
@@ -67,10 +66,7 @@ function WishList() {
                 Add your favorite items to cart and complete your order
               </p>
               <div className='flex gap-4 justify-center flex-wrap'>
-                <button className='bg-orange-700 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-medium transition-colors'>
-                  Add All to Cart
-                </button>
-                <button className='border border-gray-300 text-gray-700 px-8 py-3 rounded-lg hover:bg-white transition-colors'>
+                <button className='border border-gray-300 text-gray-700 px-8 py-3 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors'>
                   Continue Shopping
                 </button>
               </div>

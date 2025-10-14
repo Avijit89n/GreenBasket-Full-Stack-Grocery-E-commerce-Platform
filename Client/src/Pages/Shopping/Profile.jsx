@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import getHandler from '@/Services/Get.service'
 import Loader2 from '@/components/Common/Loader2'
-import { AnimatePresence } from 'framer-motion'
+import Loader3 from '@/components/Common/Loader3'
 
 const initialState = {
   fullName: "",
@@ -60,6 +60,8 @@ function Profile() {
   const [eye1, setEye1] = useState(false)
   const [eye2, setEye2] = useState(false)
   const [eye3, setEye3] = useState(false)
+  const [imageCount, setImageCount] = useState(0)
+  const [loading, setLoading] = useState(true)
 
   const addAddress = async (e) => {
     setAddrLoad(true)
@@ -183,16 +185,26 @@ function Profile() {
     })
   }, [user])
 
+  useEffect(() => {
+    if(imageCount == 1){
+      setLoading(false)
+    }
+  }, [imageCount])
+
   return (
-    <AnimatePresence>
-      <div className="w-full min-h-screen bg-muted/40 py-6">
+    <div>
+      {(loading || addrLoad) && <Loader3/>}
+      <div className={`w-full min-h-screen bg-muted/40 py-6 ${loading ? "opacity-0" : "opacity-100"} transition-opacity duration-500`}>
         <div className="w-full max-w-full px-4 sm:px-6 lg:px-12 mx-auto grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-2">
 
           <form onSubmit={updateProfile} className="bg-white rounded-2xl p-6 shadow-sm h-[620px]">
             <div className="flex flex-col items-center">
               <div className='relative'>
                 {data?.avatar ?
-                  <img className={"h-26 w-26 rounded-full border object-contain"}
+                  <img
+                    onLoad={() => setImageCount(prev => prev + 1)}
+                    loading='lazy'
+                    className={"h-26 w-26 rounded-full border object-contain"}
                     src={
                       typeof (data?.avatar) === "string" && data.avatar.includes('https://res.cloudinary.com') ?
                         data.avatar :
@@ -535,7 +547,7 @@ function Profile() {
           </ScrollArea>
         </div>
       </div>
-    </AnimatePresence>
+    </div>
   )
 }
 
