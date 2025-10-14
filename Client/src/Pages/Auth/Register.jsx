@@ -3,8 +3,8 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast';
-import Loader from '@/components/Common/Loader';
 import { ArrowLeft } from 'lucide-react';
+import Loader3 from '@/components/Common/Loader3';
 
 const formData = [
     {
@@ -82,7 +82,7 @@ function Register() {
         })
     }
     
-    return loading ? (<Loader />) : (
+    return loading ? (<Loader3 />) : (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
             <button onClick={() => navigate('/shop/home')} className='absolute top-5 left-3 flex justify-center items-center gap-2 text-base hover:underline hover:text-green-700 font-semibold'><ArrowLeft height={19} width={19}/> Back to home</button>
             <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8">

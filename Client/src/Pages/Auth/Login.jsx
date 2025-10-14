@@ -4,10 +4,10 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { login, logout } from '../../Store/authSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
-import Loader from '../../components/Common/Loader';
 import { toast } from 'react-hot-toast';
 import { hideLoader, showLoader } from '@/Store/loaderSlice.js';
 import { ArrowLeft } from 'lucide-react';
+import Loader3 from '@/components/Common/Loader3.jsx';
 
 
 const formData = [
@@ -65,7 +65,7 @@ function Login() {
 
     return (
         <div className="relative min-h-screen bg-gradient-to-br from-white via-gray-100 to-green-50 flex items-center justify-center p-4">
-            {loading && <Loader />}
+            {loading && <Loader3 />}
             <button onClick={() => navigate('/shop/home')} className='absolute top-5 left-3 flex justify-center items-center gap-2 text-base hover:underline hover:text-green-700 font-semibold'><ArrowLeft height={19} width={19}/> Back to home</button>
             <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Login</h2>
