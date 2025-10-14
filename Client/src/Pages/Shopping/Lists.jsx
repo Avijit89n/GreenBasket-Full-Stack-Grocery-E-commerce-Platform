@@ -188,7 +188,7 @@ function Lists() {
 
   return (
     <div className={`flex gap-3 m-3`} >
-      <div className='bg-white w-[300px] hidden md:block lg:block max-h-[1300px] p-5 rounded-md'>
+      <div className='bg-white shadow-lg w-[300px] hidden md:block lg:block max-h-[1300px] p-5 rounded-md'>
         <h1 className='text-xl  font-bold border-b py-3 border-gray-300 flex gap-2 items-center'><SlidersHorizontal size={18} />Filters</h1>
         <Accordion
           type="multiple"
@@ -267,7 +267,7 @@ function Lists() {
 
 
       </div>
-      <div className="bg-white w-full p-4 rounded-md ">
+      <div className="bg-white w-full p-4 rounded-md shadow-lg">
         <div className='grid gap-5 grid-cols-[repeat(auto-fit,minmax(230px,1fr))]'>
           {data.productDetails?.map((item, index) => (
             data.productDetails.length - 1 === index ?
