@@ -73,6 +73,7 @@ function Home() {
                   <div className="relative w-full h-[200px] sm:h-[300px] md:h-[400px] lg:h-[585px] overflow-hidden rounded-md">
                     <img
                       src={item}
+                      loading='lazy'
                       alt={`loading${index}...`}
                       className="absolute inset-0 w-full h-full object-cover rounded-md transition-all duration-300"
                     />
@@ -103,7 +104,7 @@ function Home() {
             <div className='grid sm:grid-cols-[repeat(auto-fill,minmax(130px,1fr))] grid-cols-4 gap-3' >
               {category?.map(item =>
                 <div onClick={() => navigate(`/shop/lists/${item._id}`)} key={item._id} className='p-3 rounded-md bg-white cursor-pointer'>
-                  <img src={item.image} className='rounded-md' />
+                  <img loading='lazy' src={item.image} className='rounded-md' />
                   <p className='text-xs sm:text-sm font-semibold py-2 md:py-3 overflow-hidden text-center'>{capitalize(item.name)}</p>
                 </div>
               )}
@@ -118,6 +119,7 @@ function Home() {
                 className="relative w-full sm:w-[48%] lg:w-[700px] rounded-xl overflow-hidden group"
               >
                 <img
+                  loading='lazy'
                   src={ad}
                   alt={`advertisement-${index + 1}`}
                   className="h-full w-full object-contain rounded-md transition-transform duration-500 group-hover:scale-105"
