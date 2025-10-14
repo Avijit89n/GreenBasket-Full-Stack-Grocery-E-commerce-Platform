@@ -7,26 +7,20 @@ export default function Contact() {
   const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
-    // When all resources (images, iframes, fonts) are loaded
-    const handlePageLoad = () => {
-      setLoading(false);
-    };
+    if (mapLoaded) {
+      // Use a brief timeout (e.g., 500ms) to ensure a smooth transition and prevent the loader from flashing
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 500);
 
-    if (document.readyState === "complete" && mapLoaded) {
-      setLoading(false);
-    } else {
-      window.addEventListener("load", handlePageLoad);
+      return () => clearTimeout(timer); // Cleanup the timer
     }
-
-    return () => {
-      window.removeEventListener("load", handlePageLoad);
-    };
   }, [mapLoaded]);
 
   return (
     <>
       {/* Loader */}
-      {loading && <Loader3/>}
+      {loading && <Loader3 />}
 
       {/* Main Content */}
       <section className="bg-gray-50">
