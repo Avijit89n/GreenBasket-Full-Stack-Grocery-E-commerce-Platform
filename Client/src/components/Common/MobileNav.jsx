@@ -21,10 +21,8 @@ import { addWishItems, clearOnLogoutWishlist } from '@/Store/wishListSlice';
 
 function MobileNav() {
     const userId = useSelector(state => state?.auth)
-    const [open, setOpen] = useState(false)
     const [sheetopen, setSheetOpen] = useState(false)
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     const { isNew, cartItems } = useSelector(state => state.addToCart)
     const wishList = useSelector(state => state.wishList)
 
@@ -113,7 +111,7 @@ function MobileNav() {
                             </NavLink></SheetClose>
                         </li>
                         <li>
-                            <SheetClose asChild><NavLink to={`/shop/my-orders/${userId?._id}`} className="hover:bg-gray-100 text-gray-500 hover:text-black dark:hover:bg-gray-700 flex items-center p-2 rounded-lg dark:text-white group">
+                            <SheetClose asChild><NavLink to={`/shop/my-orders/${userId?.user?._id}`} className="hover:bg-gray-100 text-gray-500 hover:text-black dark:hover:bg-gray-700 flex items-center p-2 rounded-lg dark:text-white group">
                                 <Package strokeWidth='2px' size='22px' />
                                 <span className="flex-1 ms-3 whitespace-nowrap">My orders</span>
                             </NavLink></SheetClose>
