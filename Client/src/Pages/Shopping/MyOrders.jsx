@@ -52,7 +52,7 @@ export default function MyOrders() {
 
     <div className={`bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100 min-h-screen`}>
 
-      <div className="shadow-md backdrop-blur-sm w-full bg-gray-100">
+      <div className="shadow-md backdrop-blur-sm w-full bg-gray-100 h-full">
         <div className="max-w-7xl mx-auto px-4 w-full sm:px-6 lg:px-8 py-6 bg-white rounded-b-md">
           <div className="flex flex-col gap-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
