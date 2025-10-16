@@ -117,7 +117,7 @@ function UserOrder({ order }) {
                         </div>
                     </div>
 
-                    <div className="flex gap-3 overflow-x-auto mb-5 pb-2 scrollbar-hide">
+                    <div className="flex gap-3 overflow-x-auto scrollbar-hide">
                         {order.productDetails?.map((img, index) => (
                             <div
                                 key={img._id}
@@ -134,25 +134,6 @@ function UserOrder({ order }) {
                         ))}
                     </div>
 
-
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pt-4 border-t border-gray-100">
-                        <div className="text-sm">
-                            {order.createdAt && (
-                                <p className="text-gray-600">
-                                    <span className="font-medium text-gray-900">
-                                        {order.status === "Delivered"
-                                            ? "Delivered on"
-                                            : "Expected by"}
-                                    </span>{" "}
-                                    {formatDateWithOrdinal(order.createdAt)}
-                                </p>
-                            )}
-                        </div>
-                        <button className="text-green-600 hover:text-white hover:bg-green-600 font-semibold text-sm inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-green-200 hover:border-green-600 transition-all group-hover:shadow-md">
-                            View details
-                            <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
