@@ -22,6 +22,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { clearOnLogoutCart, sentCartItems } from '@/Store/addToCartSlice'
 import { addWishItems, clearOnLogoutWishlist } from '@/Store/wishListSlice'
+import Loader3 from './Loader3'
 
 
 
@@ -34,9 +35,11 @@ function Navbar() {
   const totalWishList = useSelector(state => state.wishList.wishListItem)?.length
   const { isNew, cartItems } = useSelector(state => state.addToCart)
   const wishList = useSelector(state => state.wishList)
+  const [loader, setLoader] = useState(false)
 
 
   const onLogout = async () => {
+    setLoader(true)
     if(isNew && cartItems.length > 0) {
       dispatch(sentCartItems())
     }
@@ -55,8 +58,11 @@ function Navbar() {
       .catch(err => {
         toast.error(err.response?.message || 'Logout Failed. please try again')
       })
+      .finally(() => setLoader(false))
   }
   return (
+    <>
+    {loader && <Loader3/>}
     <div className='flex flex-col sticky top-0 z-50 bg-white shadow-sm'>
       <div className='h-16 w-full px-4 sm:px-6 md:px-10 flex items-center justify-between'>
         <Link to='/shop/home' className="flex items-center gap-2">
@@ -161,6 +167,7 @@ function Navbar() {
       </div>
       <div className='h-[1px] w-full bg-gray-200'></div>
     </div>
+    </>
   )
 }
 
