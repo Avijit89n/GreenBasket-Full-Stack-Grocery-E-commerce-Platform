@@ -83,9 +83,9 @@ function Register() {
     }
     
     return loading ? (<Loader3 />) : (
-        <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+        <div className="opacity-0 animate-fade-in-scale transition-all duration-200 relative min-h-screen bg-gray-100 flex items-center justify-center p-4">
             <button onClick={() => navigate('/shop/home')} className='absolute top-5 left-3 flex justify-center items-center gap-2 text-base hover:underline hover:text-green-700 font-semibold'><ArrowLeft height={19} width={19}/> Back to home</button>
-            <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
+            <div className="max-w-md w-full mt-10 bg-white rounded-xl shadow-lg p-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Create an Account</h2>
                 
                 <Form getItems={formData} 

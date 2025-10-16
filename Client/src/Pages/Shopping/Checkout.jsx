@@ -255,7 +255,7 @@ function Checkout() {
                             + Add a new address
                           </button>
                         </DialogTrigger>
-                        <DialogContent>
+                        <DialogContent className="overflow-y-auto max-h-10/12 sm:max-h-full">
                           <DialogHeader>
                             <DialogTitle>Add a new Address</DialogTitle>
                             <DialogDescription></DialogDescription>

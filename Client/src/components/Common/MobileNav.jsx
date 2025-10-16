@@ -9,7 +9,7 @@ import {
     SheetClose,
     SheetFooter
 } from '../ui/sheet'
-import { AlignLeft, Heart, Home, LogOut, Package, PhoneCall, ShoppingBag, TriangleAlert, User, Users } from 'lucide-react';
+import { AlignLeft, Heart, Home, LogIn, LogOut, Package, PhoneCall, ShoppingBag, TriangleAlert, User, Users } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
@@ -18,6 +18,7 @@ import toast from 'react-hot-toast';
 import postHandler from '@/Services/Post.Service';
 import { clearOnLogoutCart, sentCartItems } from '@/Store/addToCartSlice';
 import { addWishItems, clearOnLogoutWishlist } from '@/Store/wishListSlice';
+import Loader3 from './Loader3';
 
 function MobileNav() {
     const userId = useSelector(state => state?.auth)
@@ -25,9 +26,12 @@ function MobileNav() {
     const dispatch = useDispatch()
     const { isNew, cartItems } = useSelector(state => state.addToCart)
     const wishList = useSelector(state => state.wishList)
+    const navigate = useNavigate()
+    const [loader, setLoader] = useState(false)
 
 
     const onLogout = async () => {
+        setLoader(true)
         if (isNew && cartItems.length > 0) {
             dispatch(sentCartItems())
         }
@@ -45,87 +49,104 @@ function MobileNav() {
             .catch(err => {
                 toast.error(err.response?.message || 'Logout Failed. please try again')
             })
+            .finally(() => setLoader(false))
     }
 
-    return (
+    return loader ? <Loader3 /> : (
         <Sheet open={sheetopen} onOpenChange={setSheetOpen}>
             <SheetTrigger className="flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
                 <AlignLeft />
             </SheetTrigger>
-            <SheetContent side={'right'}>
+            <SheetContent side={'right'} className="overflow-y-auto">
                 <SheetHeader>
-                    <SheetTitle className={'w-full flex justify-center items-center'}>
-                        <Avatar className={`${userId?.user?.avatar ? "border-0" : "border-2 border-gray-700"} h-20 w-20`}>
-                            <AvatarImage src={userId?.user?.avatar} />
-                            <AvatarFallback asChild>
-                                <User size={22} className="text-gray-800" />
-                            </AvatarFallback>
-                        </Avatar>
-                    </SheetTitle>
-                    <SheetDescription asChild>
-                        <div className='w-full flex justify-center items-center flex-col border-b-1 pb-5'>
-                            <h2 className="text-lg font-semibold">{userId.user?.fullName || "No Data"}</h2>
-                            <p className="text-sm text-muted-foreground">{userId.user?.email || "No Data"}</p>
-                        </div>
-                    </SheetDescription>
+                    {userId?.isAuthenticate ?
+                        <>
+                            <SheetTitle className={'w-full flex justify-center items-center'}>
+                                <Avatar className={`${userId?.user?.avatar ? "border-0" : "border-2 border-gray-700"} h-20 w-20`}>
+                                    <AvatarImage src={userId?.user?.avatar} />
+                                    <AvatarFallback asChild>
+                                        <User size={22} className="text-gray-800" />
+                                    </AvatarFallback>
+                                </Avatar>
+                            </SheetTitle>
+                            <SheetDescription asChild>
+                                <div className='w-full flex justify-center items-center flex-col border-b-1 pb-5'>
+                                    <h2 className="text-lg font-semibold">{userId.user?.fullName || "No Data"}</h2>
+                                    <p className="text-sm text-muted-foreground">{userId.user?.email || "No Data"}</p>
+                                </div>
+                            </SheetDescription>
+                        </>
+                        :
+                        <>
+                            <SheetTitle className={'w-full flex justify-center items-center'}>Welcome to GreenBasket</SheetTitle>
+                            <SheetDescription asChild>
+                                <div className='w-full flex justify-center items-center flex-col border-b-1 pb-5'>
+                                    <p className="text-sm text-muted-foreground text-center">Please login to access your account and enjoy a personalized shopping experience.</p>
+                                </div>
+                            </SheetDescription>
+                        </>}
                 </SheetHeader>
-                <div className="h-full px-4 pb-4 bg-white">
-                    <ul className="space-y-2 font-medium">
+                <div className="h-full px-4 pb-4 bg-white ">
+                    <ul className="font-medium text-sm">
                         <li>
                             <SheetClose asChild><NavLink to='/shop/home' className=" hover:bg-gray-100 text-gray-500 hover:text-black dark:hover:bg-gray-700 flex items-center p-2 rounded-lg dark:text-white group">
-                                <Home strokeWidth='2px' size='22px' />
+                                <Home strokeWidth='2px' size='18px' />
                                 <span className="ms-3">Home</span>
                             </NavLink></SheetClose>
                         </li>
                         <li>
                             <SheetClose asChild><NavLink to='/shop/lists/all' className="hover:bg-gray-100 text-gray-500 hover:text-black dark:hover:bg-gray-700 flex items-center p-2 rounded-lg dark:text-white group">
-                                <ShoppingBag strokeWidth='2px' size='22px' />
+                                <ShoppingBag strokeWidth='2px' size='18px' />
                                 <span className="flex-1 ms-3 whitespace-nowrap">Shop</span>
                             </NavLink></SheetClose>
                         </li>
                         <li>
                             <SheetClose asChild><NavLink to='/shop/about' className="hover:bg-gray-100 text-gray-500 hover:text-black dark:hover:bg-gray-700 flex items-center p-2 rounded-lg dark:text-white group">
-                                <Users strokeWidth='2px' size='22px' />
+                                <Users strokeWidth='2px' size='18px' />
                                 <span className="flex-1 ms-3 whitespace-nowrap">About</span>
                             </NavLink></SheetClose>
                         </li>
                         <li>
                             <SheetClose asChild><NavLink to='/shop/contact' className="hover:bg-gray-100 text-gray-500 hover:text-black dark:hover:bg-gray-700 flex items-center p-2 rounded-lg dark:text-white group">
-                                <PhoneCall strokeWidth='2px' size='22px' />
+                                <PhoneCall strokeWidth='2px' size='18px' />
                                 <span className="flex-1 ms-3 whitespace-nowrap">Contact Us</span>
                             </NavLink></SheetClose>
                         </li>
                     </ul>
 
-                    {userId?.isAuthenticate && <ul className="space-y-2 font-medium border-t-1 mt-4 pt-4">
+                    {userId?.isAuthenticate && <ul className="font-medium text-sm border-t-1 mt-3 pt-1">
                         <li>
                             <SheetClose asChild><NavLink to={`/shop/edit/profile/${userId?.user?._id}`} className=" hover:bg-gray-100 text-gray-500 hover:text-black dark:hover:bg-gray-700 flex items-center p-2 rounded-lg dark:text-white group">
-                                <User strokeWidth='2px' size='22px' />
+                                <User strokeWidth='2px' size='18px' />
                                 <span className="ms-3">Account</span>
                             </NavLink></SheetClose>
                         </li>
                         <li>
                             <SheetClose asChild><NavLink to='/shop/wishlist' className="hover:bg-gray-100 text-gray-500 hover:text-black dark:hover:bg-gray-700 flex items-center p-2 rounded-lg dark:text-white group">
-                                <Heart strokeWidth='2px' size='22px' />
+                                <Heart strokeWidth='2px' size='18px' />
                                 <span className="flex-1 ms-3 whitespace-nowrap">Wishlist</span>
                             </NavLink></SheetClose>
                         </li>
                         <li>
                             <SheetClose asChild><NavLink to={`/shop/my-orders/${userId?.user?._id}`} className="hover:bg-gray-100 text-gray-500 hover:text-black dark:hover:bg-gray-700 flex items-center p-2 rounded-lg dark:text-white group">
-                                <Package strokeWidth='2px' size='22px' />
+                                <Package strokeWidth='2px' size='18px' />
                                 <span className="flex-1 ms-3 whitespace-nowrap">My orders</span>
                             </NavLink></SheetClose>
                         </li>
                     </ul>}
                 </div>
-                {userId?.isAuthenticate && <SheetFooter>
-                    <button onClick={() => onLogout()} className='w-full bg-red-200 border border-red-300 flex justify-center p-2 text-red-700 font-semibold gap-2 rounded-md hover:bg-red-300 cursor-pointer'>
-                        <LogOut />Logout
+                {!userId?.isAuthenticate ? <SheetFooter>
+                    <button onClick={() => navigate('/user/login')} className='w-full bg-green-100 border border-green-200 flex justify-center p-2 text-green-700 font-semibold gap-2 rounded-md hover:bg-green-200 cursor-pointer'>
+                        <LogIn />Login
                     </button>
-                </SheetFooter>}
+                </SheetFooter> :
+                    <SheetFooter>
+                        <button onClick={() => onLogout()} className='w-full bg-red-100 border border-red-200 flex justify-center p-2 text-red-700 font-semibold gap-2 rounded-md hover:bg-red-200 cursor-pointer'>
+                            <LogOut />Logout
+                        </button>
+                    </SheetFooter>}
             </SheetContent>
         </Sheet>
-
     )
 }
 
