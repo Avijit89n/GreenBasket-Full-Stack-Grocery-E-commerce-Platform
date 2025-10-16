@@ -205,7 +205,7 @@ const getTableDataForProducts = asyncHandler(async (req, res) => {
         {
             $skip: skip
         },
-        {
+        { 
             $limit: limit
         }
     ])

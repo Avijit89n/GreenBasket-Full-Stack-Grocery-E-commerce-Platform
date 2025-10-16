@@ -262,7 +262,15 @@ const changeStatus = asyncHandler(async (req, res) => {
 })
 
 const getUserMyOrder = asyncHandler(async (req, res) => {
+    const page = parseInt(req.query.page) || 1
+    const limit = parseInt(req.query.limit) || 10
+    const skip = (page - 1) * limit
+
+    let isEnd = false
+
     const userID = req.params.userID
+
+    console.log(page, limit, skip, userID)
     const orderDEtails = await Order.aggregate([
         {
             $match: {
@@ -301,14 +309,24 @@ const getUserMyOrder = asyncHandler(async (req, res) => {
             }
         },
         {
-            $sort: {
-                createdAt: -1
-            }
+            $sort: { createdAt: -1 }
+        },
+        {
+            $skip: skip
+        },
+        { 
+            $limit: limit
         }
     ])
+
+    if (orderDEtails.length < limit) isEnd = true
+
     return res.status(200)
         .json(
-            new ApiResponse(200, "Order fetched successfully", orderDEtails, true)
+            new ApiResponse(200, "Order fetched successfully", {
+                orderDetails: orderDEtails, 
+                isEnd
+            }, true)
         )
 })
 
