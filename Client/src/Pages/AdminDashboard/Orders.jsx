@@ -21,7 +21,7 @@ export default function Orders() {
   const [page, setPage] = useState(1)
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
-  const { ref, inView } = useInView({ threshold: 1 })
+  const { ref, inView } = useInView({ threshold: 0 })
   const navigate = useNavigate()
 
   const fetchData = async () => {
@@ -80,22 +80,10 @@ export default function Orders() {
     <div className="p-2 font-sans">
       <h1 className='mb-6 text-xl font-bold text-gray-700'>Orders</h1>
 
-      <div className="bg-white rounded-xl shadow-md border border-gray-200 p-4">
-        <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
-          <div className="flex items-center gap-2 px-4 pb-0 pt-2">
-            <input
-              type="text"
-              placeholder="Search by Order ID or Customer"
-              className="border border-gray-300 rounded-md px-3 py-2 text-sm w-64 outline-none focus:ring-2 focus:ring-primary"
-            />
-            <button className='p-2.5 rounded-md border border-gray-300' >
-              <Search className="w-4 h-4 mr-1" />
-            </button>
-          </div>
-        </div>
+      <div className="bg-white rounded-xl shadow-md border border-gray-200 p-4 min-h-44">
 
         <div className='p-4 pt-2'>
-          <Table className="min-w-full text-base">
+          <Table className="min-w-full text-base h-full">
             <TableHeader >
               <TableRow>
                 <TableHead className="text-gray-600">Order ID</TableHead>
@@ -108,7 +96,7 @@ export default function Orders() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data?.data?.length > 0 ? (
+              {(data?.data?.length > 0) ? (
                 data.data.map((item) => (
                   <TableRow key={item._id}>
                     <TableCell className="text-blue-500">#{item._id}</TableCell>
@@ -127,7 +115,7 @@ export default function Orders() {
               ) : (
                 <TableRow>
                   <TableCell colSpan={7} className="text-center py-6 text-muted-foreground">
-                    No orders found.
+                    {!loading && "No orders found."}
                   </TableCell>
                 </TableRow>
               )}

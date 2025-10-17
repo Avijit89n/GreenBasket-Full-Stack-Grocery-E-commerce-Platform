@@ -39,7 +39,7 @@ function capitalize(str) {
 }
 
 export default function Products() {
-  const [ref, inView] = useInView({threshold: 1})
+  const [ref, inView] = useInView({threshold: 0})
 
   const [productData, setProductData] = useState([])
   const [loading, setLoading] = useState(false)
@@ -108,7 +108,7 @@ export default function Products() {
   }, [page])
 
 
-  return loading ? <Loader /> : (
+  return (
     <div className='p-2 font-sans'>
       <h1 className='mb-6 text-xl font-bold text-gray-700'>Products</h1>
       <div className='bg-white p-5 rounded-md'>
@@ -187,7 +187,7 @@ export default function Products() {
         </Table>
 
         {pagination ?
-          <div className='flex p-2 justify-center items-center w-full'><Loader2 height={7} width={7} /></div>
+          <div className='flex justify-center items-center min-h-44'><Loader2 height={8} width={8}/></div>
           : ""
         }
 

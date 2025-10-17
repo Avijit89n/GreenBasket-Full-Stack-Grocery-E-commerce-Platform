@@ -21,7 +21,7 @@ function capitalize(str) {
 }
 
 function Features() {
-  const { ref, inView } = useInView({ threshold: 1 })
+  const { ref, inView } = useInView({ threshold: 0 })
   const autoplay = useRef(Autoplay({ delay: 3000 }));
   const [emblaRef] = useEmblaCarousel({ loop: true }, [autoplay.current]);
 

@@ -3,11 +3,9 @@ import { Heart, Minus, Plus } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductDetails } from "@/Store/productDetailsSlice";
 import { decrement, increment } from "@/Store/addToCartSlice";
 import { wishListManage } from "@/Store/wishListSlice";
 import toast from "react-hot-toast";
-import { Button } from "../ui/button";
 
 function capitalize(str) {
   if (!str) return "";
@@ -90,8 +88,8 @@ const ProductCart2 = ({ productData }) => {
         >
           <Heart
             size={18}
-            className={`transition-all duration-200 ease-in-out stroke-[1.5] 
-               ${wishListProduct ? "fill-pink-500 text-pink-600" : "fill-gray-200 text-gray-400"}`}
+            className={`transition-all duration-500
+               ${wishListProduct ? "fill-pink-500 animate-big-small text-pink-600" : "fill-gray-200 text-gray-400"}`}
           />
         </button>
 

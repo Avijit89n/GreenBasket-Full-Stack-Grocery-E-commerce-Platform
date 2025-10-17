@@ -231,11 +231,9 @@ function Categories() {
             </form >
           </div >
           <div className='rounded-bl-md rounded-br-md md:rounded-tl-md md:rounded-tr-md bg-white px-4 lg:w-2/3 w-full h-200 overflow-scroll'>
-            <div className='py-5 mb-5 p-2 sticky top-0 bg-white z-10 border-b-1 flex items-center flex-wrap gap-2'>
-              <input className='p-2 text-sm rounded-md border-gray-300 border outline-none w-2/3' type="text" placeholder="Search here..." />
-              <button className=' hover:bg-gray-200 cursor-pointer p-2 border rounded-md text-sm border-gray-300'><Search size={18} strokeWidth={1} /></button>
-            </div>
-            {loading ? <div className='flex justify-center items-center py-14'><Loader2 height={8} width={8}/></div> : <Table className={"text-base"}>
+            <div className='py-3 p-2 sticky top-0 z-10 bg-white flex items-center flex-wrap gap-2'></div>
+            {loading ? <div className='flex justify-center items-center py-14'><Loader2 height={8} width={8}/></div> : 
+            <Table className={"text-base"}>
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-[100px]">Image</TableHead>
@@ -299,7 +297,7 @@ function Categories() {
             </Table>}
             {tableData.length === 0 ?
               <div className='text-gray-400 text-sm flex justify-center items-center h-1/3 w-full'>
-                No Data Found
+                {!loading && "No Data Found"}
               </div> :
               <div className='sticky bottom-0 h-7 bg-white p-3'></div>
             }

@@ -65,7 +65,7 @@ const initialData = {
 }
 
 function SubCategories() {
-    const [ref, inView] = useInView({threshold: 1});
+    const [ref, inView] = useInView({threshold: 0});
 
     const navigate = useNavigate()
 
@@ -278,10 +278,7 @@ function SubCategories() {
                         </form >
                     </div >
                     <div className='rounded-md bg-white px-4 lg:w-2/3 w-full h-150 overflow-scroll'>
-                        <div className='py-5 mb-5 p-2 sticky top-0 bg-white z-10 border-b-1 flex items-center flex-wrap gap-2'>
-                            <input className='p-2 text-sm rounded-md border-gray-300 border outline-none w-2/3' type="text" placeholder="Search here..." />
-                            <button className=' hover:bg-gray-200 cursor-pointer p-2 border rounded-md text-sm border-gray-300'><Search size={18} strokeWidth={1} /></button>
-                        </div>
+                        <div className='h-7 sticky top-0 bg-white z-10 flex items-center flex-wrap gap-2'></div>
                         <Table className={"text-base"}>
                             <TableHeader>
                                 <TableRow>
