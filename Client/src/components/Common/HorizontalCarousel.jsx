@@ -3,7 +3,7 @@ import React, { useCallback } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures'
 
-function HorizontalCarousel({ children, className }) {
+function HorizontalCarousel({ children }) {
     const [carouselRef, emblaApi] = useEmblaCarousel(
         { dragFree: true },
         [
@@ -29,7 +29,7 @@ function HorizontalCarousel({ children, className }) {
     }, [emblaApi])
 
     return (
-        <div className={`relative ${className}`}>
+        <div className="relative">
 
             <div className="overflow-hidden" ref={carouselRef}>
                 <div className="flex gap-4 select-none">{children}</div>

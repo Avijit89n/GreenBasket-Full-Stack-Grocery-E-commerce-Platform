@@ -33,7 +33,7 @@ const addProduct = asyncHandler(async (req, res) => {
     } = req.body;
     const fields = req.files;
 
-    if(otherImages && !Array.isArray(otherImages)) otherImages = [otherImages]
+    if (otherImages && !Array.isArray(otherImages)) otherImages = [otherImages]
 
     if (!name || !category || !status || !price || !brand || !quantity || !countryOfOrigin || !manufacturingDate || !expiryDate) {
         if (fs.existsSync(fields.avatar[0].path)) fs.unlinkSync(fields.avatar?.[0]?.path)
@@ -205,7 +205,7 @@ const getTableDataForProducts = asyncHandler(async (req, res) => {
         {
             $skip: skip
         },
-        { 
+        {
             $limit: limit
         }
     ])
@@ -304,33 +304,88 @@ const productPageData = asyncHandler(async (req, res) => {
 })
 
 
-const getProduct = asyncHandler(async(req, res) => {
+const getProduct = asyncHandler(async (req, res) => {
     const productID = req.params.productID;
-    const product = await Product.findById(productID);
-    if(!product){
+    const product = await Product.aggregate([
+        {
+            $match: {
+                _id: new mongoose.Types.ObjectId(productID),
+                status: "active"
+            }
+        },
+        {
+            $lookup: {
+                from: "products",
+                localField: "variant",
+                foreignField: "_id",
+                pipeline: [
+                    {
+                        $match: {
+                            status: "active"
+                        }
+                    },
+                    {
+                        $project: {
+                            name: 1,
+                            avatar: 1,
+                            price: 1,
+                            finalPrice: 1,
+                            discount: 1,
+                            weight: 1,
+                            size: 1
+                        }
+                    }
+                ],
+                as: "productVarient"
+            }
+        },
+        {
+            $lookup: {
+                from: "products",
+                let: { categoryID: "$category" },
+                pipeline: [
+                    {
+                        $match: {
+                            $expr: { $ne: ["$category", "$$categoryID"] },
+                            status: "active"
+                        }
+                    },
+                    {
+                        $sample:{
+                            size: 10
+                        }
+                    }
+                ],
+                as: "relatedProducts"
+
+            }
+        }
+    ])
+
+    if (!product) {
         return res.status(400)
             .json(
                 new ApiResponse(400, "Product not found", {}, false)
-            )       
+            )
     }
-
     return res.status(200)
         .json(
-            new ApiResponse(200, "Successfully fetched Product", product)
+            new ApiResponse(200, "Successfully fetched Product", product[0])
         )
 })
 
-const getQuantity = asyncHandler(async(req, res) => {
-    let {productID} = req.body
-    if(!productID || productID.length === 0){
+
+const getQuantity = asyncHandler(async (req, res) => {
+    let { productID } = req.body
+    if (!productID || productID.length === 0) {
         return res.status(400)
             .json(
                 new ApiResponse(400, "Your Cart is Empty", {}, false)
             )
-    } 
-    if(productID && !Array.isArray(productID)) productID = [productID]
+    }
+    if (productID && !Array.isArray(productID)) productID = [productID]
 
-    productID = productID?.map(element =>  new mongoose.Types.ObjectId(element));
+    productID = productID?.map(element => new mongoose.Types.ObjectId(element));
 
     const findProducts = await Product.aggregate([
         {
@@ -346,7 +401,7 @@ const getQuantity = asyncHandler(async(req, res) => {
             }
         }
     ])
-    if(!findProducts || findProducts.length === 0) {
+    if (!findProducts || findProducts.length === 0) {
         return res.status(400)
             .json(
                 new ApiResponse(400, "Products not found", {}, false)

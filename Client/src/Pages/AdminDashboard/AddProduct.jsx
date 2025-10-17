@@ -96,7 +96,6 @@ export default function AddProduct() {
     const [varientOption, setvariantOption] = useState([])
     const [manufacturingDateOpen, setManufacturingDateOpen] = useState(false);
     const [expiryDateOpen, setExpiryDateOpen] = useState(false)
-    const [checkStatusOfCategory, setCheckStatusOfCategory] = useState("active")
 
     const handleImages = (e, index) => {
         const file = e.target.files[0]
@@ -166,6 +165,7 @@ export default function AddProduct() {
         await getHandler(`${import.meta.env.VITE_BACKEND_URL}/api/subcategory/get-variant/${id?.value || id}?currentProductID=${productID}`)
             .then((res) => {
                 setvariantOption(res.data)
+                console.log(res.data)
             })
             .catch((err) => {
                 toast.error(err?.response?.data?.message || "Failed to fetch Variant data")

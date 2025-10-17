@@ -53,7 +53,6 @@ function ProductDetails() {
         toast.error(err?.response?.data?.message || "Something went wrong")
       })
       .finally(() => {
-        console.log("load")
         setloading(false)
       })
   }
@@ -290,35 +289,6 @@ function ProductDetails() {
                     </>
                 }
               </div>
-              {productData?.variant && productData?.variant?.length > 0 &&
-                <div className="border-2 border-dashed border-gray-300 rounded-md p-4 mt-4">
-                  <p className="text-sm font-semibold text-gray-600 mb-4">Other Available Variants:</p>
-                  <div className="flex flex-col gap-5">
-                    {productData?.variant?.map((_, i) => (
-                      <div key={i} className="w-full flex flex-wrap justify-center gap-5 rounded-xl border border-gray-200 bg-white p-2 sm:p-4">
-                        <img src={photo} alt="Product" className="w-18 h-18 p-2 bg-blue-50 sm:w-20 sm:h-20 object-contain rounded-md" />
-                        <div className="flex flex-col grow">
-                          <div className="flex items-center justify-between gap-3">
-                            <h3 className="text-lg font-semibold text-gray-800">
-                              Paper Boat Aamras {i + 1}
-                            </h3>
-                            <Badge className={"bg-green-600"}>30%off</Badge>
-                          </div>
-                          <div className="text-sm text-gray-500 flex justify-between">
-                            <div>
-                              <p>Size: 250ml</p>
-                              <p>Weight: 300g</p>
-                            </div>
-                            <div className="flex items-baseline gap-2">
-                              <p className="line-through text-gray-400 text-sm">₹45</p>
-                              <p className="text-xl font-bold text-orange-600">₹25</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>}
               <div className="border-2 border-gray-300 border-dashed rounded-xl bg-white p-6 mt-5">
                 <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-7">
                   Why Shop From <span className="text-green-600">Green Basket</span>?
@@ -382,37 +352,38 @@ function ProductDetails() {
 
         </div>
 
-        <div className="bg-white p-5">
+        {productData?.productVarient?.length > 0 && <div className="bg-white p-5">
           <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Available Variants</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[...Array(3)].map((_, i) => (
+            {productData.productVarient?.map((item, i) => (
               <div
-                key={i}
-                className="flex gap-4 p-3 border border-gray-200 rounded-lg hover:border-green-600 transition-all cursor-pointer"
+                onClick={() => navigate(`/shop/product-details/${item?._id}`)}
+                key={item?._id}
+                className="flex gap-4 p-3 border border-gray-300 duration-300 rounded-lg hover:border-green-600 group hover:bg-green-50 transition-all cursor-pointer"
               >
-                <div className="w-20 h-20 bg-gray-100 p-2 rounded-md flex items-center justify-center">
+                <div className="w-25 h-25 bg-gray-100 p-2 border group-hover:border-green-600 border-gray-300 rounded-md flex items-center justify-center">
                   <img
-                    src={photo}
+                    src={item?.avatar}
                     alt="Variant"
-                    className="object-contain w-full h-full transition-transform duration-200 group-hover:scale-105"
+                    className="drop-shadow-md object-contain w-full h-full transition-transform duration-200 group-hover:scale-105"
                   />
                 </div>
                 <div className="flex flex-col justify-between flex-grow">
-                  <h3 className="font-medium text-gray-800 text-base">Paper Boat Aamras {i + 1}</h3>
-                  <p className="text-sm text-gray-500">Size: 250ml &bull; Weight: 300g</p>
+                  <h3 className="font-medium text-gray-800 text-base">{item?.name?.replace(/\b\w/g, char => char.toUpperCase())}</h3>
+                  {(item?.size || item?.weight) && <p className="text-sm text-gray-500">{item.size ? `Size: ${item?.size}` : ""} {item.weight ? `Weight: ${item?.weight}` : ""}</p>}
                   <div className="flex justify-between items-end">
                     <div className="flex items-center gap-2">
-                      <p className="text-gray-400 text-sm line-through">₹45</p>
-                      <p className="text-orange-600 text-lg font-semibold">₹25</p>
+                      { item?.finalPrice !== item?.price && <p className="text-gray-400 text-sm line-through">₹{item?.price}</p>}
+                      <p className="text-orange-600 text-lg font-semibold">₹{item?.finalPrice}</p>
                     </div>
-                    <span className="bg-green-600 text-white text-xs px-2 py-0.5 rounded-full font-semibold">30% OFF</span>
+                    {item?.discount !== 0 && <span className="bg-green-600 text-white text-xs px-2 py-0.5 rounded-full font-semibold">{item?.discount}% OFF</span>}
                   </div>
                 </div>
               </div>
             ))}
           </div>
-        </div>
+        </div>}
 
         <div className='flex flex-col md:gap-3 lg:gap-4 gap-5 px-5 py-7 bg-white'>
           <div className='flex items-center justify-between flex-wrap'>
@@ -430,6 +401,30 @@ function ProductDetails() {
           </div>
           <HorizontalCarousel>
             {featuredProductData?.productDetails?.map(item =>
+              productID !== item._id &&
+              <div key={item._id} onDoubleClick={(e) => e.preventDefault()} className="flex-none w-[200px] sm:w-[220px] md:w-[240px] lg:w-[260px] h-[350px] md:h-[400px]">
+                <ProductCart2 productData={item} />
+              </div>
+            )}
+          </HorizontalCarousel>
+        </div>
+
+        <div className='flex flex-col md:gap-3 lg:gap-4 gap-5 px-5 py-7 bg-white'>
+          <div className='flex items-center justify-between flex-wrap'>
+            <p className="text-3xl font-semibold">Related Products</p>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button onClick={() => navigate(`/shop/lists/featured`)} variant="outline"><ChevronsRight /></Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>See All</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+          <HorizontalCarousel>
+            {productData?.relatedProducts?.map(item =>
               productID !== item._id &&
               <div key={item._id} onDoubleClick={(e) => e.preventDefault()} className="flex-none w-[200px] sm:w-[220px] md:w-[240px] lg:w-[260px] h-[350px] md:h-[400px]">
                 <ProductCart2 productData={item} />
