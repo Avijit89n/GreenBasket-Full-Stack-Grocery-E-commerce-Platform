@@ -85,7 +85,7 @@ function Home() {
         </div>
 
         <div className='flex flex-col md:gap-3 lg:gap-4 gap-5 mt-10 px-4 sm:px-6 md:px-8 lg:px-12'>
-          <p className="text-3xl font-semibold">Categories</p>
+          <p className="text-xl sm:text-2xl md:text-3xl font-semibold">Categories</p>
           <div className='grid sm:grid-cols-[repeat(auto-fill,minmax(130px,1fr))] grid-cols-4 gap-3' >
             {category?.map(item =>
               <div onClick={() => navigate(`/shop/lists/${item._id}`)} key={item._id} className='p-3 rounded-md bg-white cursor-pointer'>
@@ -121,7 +121,7 @@ function Home() {
 
         <div className='flex flex-col md:gap-3 lg:gap-4 gap-5 mt-10 px-4 sm:px-6 md:px-8 lg:px-12'>
           <div className='flex items-center justify-between flex-wrap'>
-            <p className="text-3xl font-semibold">Featured Products</p>
+            <p className="text-xl sm:text-2xl md:text-3xl font-semibold">Featured Products</p>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -145,7 +145,7 @@ function Home() {
         {data?.allcategory?.map(item =>
           <div key={item._id} className='flex flex-col md:gap-3 lg:gap-4 gap-5 mt-20 px-4 sm:px-6 md:px-8 lg:px-12'>
             <div className='flex items-center justify-between flex-wrap'>
-              <p className="text-3xl font-semibold">{capitalize(item.name)}</p>
+              <p className="text-xl sm:text-2xl md:text-3xl font-semibold">{capitalize(item.name)}</p>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
