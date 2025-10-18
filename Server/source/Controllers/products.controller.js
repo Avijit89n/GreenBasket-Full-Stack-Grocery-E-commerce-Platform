@@ -177,7 +177,7 @@ const addProduct = asyncHandler(async (req, res) => {
             new ApiResponse(201, "product added successfully", product, true)
         )
 
-    return res.status(201)
+    return res.status(201) 
         .json(
             new ApiResponse(201, "product Updated successfully", product, true)
         )
