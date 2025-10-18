@@ -39,7 +39,7 @@ function capitalize(str) {
 }
 
 export default function Products() {
-  const [ref, inView] = useInView({threshold: 0})
+  const [ref, inView] = useInView({threshold: 1})
 
   const [productData, setProductData] = useState([])
   const [loading, setLoading] = useState(false)

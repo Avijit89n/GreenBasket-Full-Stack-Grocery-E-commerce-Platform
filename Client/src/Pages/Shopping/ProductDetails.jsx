@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import photo from "../../assets/product/1209452_6-paper-boat-aamras-mango-fruit-juice.webp"
 import { ArrowLeft, ChevronsRight, ArrowRight, ChevronDown, Heart, Share, ShieldCheck, ShoppingBasket, Star, Truck, Wallet, Minus, Plus } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { useDispatch, useSelector } from 'react-redux'

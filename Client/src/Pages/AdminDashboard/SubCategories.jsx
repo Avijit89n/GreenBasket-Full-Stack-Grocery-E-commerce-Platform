@@ -65,7 +65,7 @@ const initialData = {
 }
 
 function SubCategories() {
-    const [ref, inView] = useInView({threshold: 0});
+    const [ref, inView] = useInView({threshold: 1});
 
     const navigate = useNavigate()
 

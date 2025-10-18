@@ -142,11 +142,12 @@ function Lists() {
   const [data, setData] = useState({});
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false)
-  const { ref, inView } = useInView({ threshold: 0, })
+  const { ref, inView } = useInView({ threshold: 1, })
   const { categoryID } = useParams();
 
 
   const fetchData = async (url) => {
+    console.log("feching data")
     setLoading(true);
     await getHandler(url)
       .then((res) => {
@@ -172,7 +173,7 @@ function Lists() {
     if (inView && !loading && !data.isEnd) {
       setPage(prev => prev + 1);
     }
-  }, [inView]);
+  }, [inView, loading, data.isEnd]);
 
   useEffect(() => {
     if (!data.isEnd) {
