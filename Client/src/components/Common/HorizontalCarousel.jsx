@@ -41,7 +41,7 @@ function HorizontalCarousel({ children }) {
   return (
     <div className="relative group w-full">
       {showPrev && (
-        <button onClick={scrollPrev} className="absolute text-gray-400 group-hover:opacity-100 opacity-0 transition-all duration-500 bg-gradient-to-r from-gray-100 px-3 to-transparent left-0 top-0 z-10 h-full">
+        <button onClick={scrollPrev} className="absolute text-gray-400 group-hover:opacity-100 opacity-0 hidden md:block transition-all duration-500 bg-gradient-to-r from-gray-100 px-3 to-transparent left-0 top-0 z-10 h-full">
           <ChevronLeft className="w-5 h-5 sm:w-7 md:w-10 md:h-10 active:animate-bkd-animation" strokeWidth={3} />
         </button>
       )}
@@ -53,7 +53,7 @@ function HorizontalCarousel({ children }) {
       </div>
 
       {showNext && (
-        <button onClick={scrollNext} className="absolute text-gray-400 group-hover:opacity-100 opacity-0  transition-all duration-500 bg-gradient-to-l from-gray-100 px-3 to-transparent right-0 top-0 z-10 h-full">
+        <button onClick={scrollNext} className="absolute text-gray-400 group-hover:opacity-100 opacity-0 hidden md:block transition-all duration-500 bg-gradient-to-l from-gray-100 px-3 to-transparent right-0 top-0 z-10 h-full">
           <ChevronRight className="w-5 h-5 sm:w-7 md:w-10 md:h-10 active:animate-frd-animation" strokeWidth={3}/>
         </button>
       )}
