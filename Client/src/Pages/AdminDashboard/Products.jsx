@@ -39,7 +39,7 @@ function capitalize(str) {
 }
 
 export default function Products() {
-  const [ref, inView] = useInView({threshold: 1})
+  const [ref, inView] = useInView({threshold: 0})
 
   const [productData, setProductData] = useState([])
   const [loading, setLoading] = useState(false)
@@ -101,7 +101,7 @@ export default function Products() {
     if (inView && !productData.isEnd && !pagination) {
       setPage(prev => prev + 1);
     }
-  }, [inView])
+  }, [inView, pagination, productData.isEnd])
 
   useEffect(() => {
     if (!productData.isEnd) fetchProductData()

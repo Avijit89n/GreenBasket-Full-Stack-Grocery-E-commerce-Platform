@@ -10,7 +10,7 @@ export default function MyOrders() {
   const [page, setPage] = useState(1);
   const userID = useParams().userID;
   const [orders, setOrders] = useState({ orderDetails: [], isEnd: false });
-  const { ref, inView } = useInView({ threshold: 1.8 });
+  const { ref, inView } = useInView({ threshold: 0.8 });
   const [pageLoad, setPageLoad] = useState(false);
 
   const getOrders = async () => {
@@ -33,7 +33,7 @@ export default function MyOrders() {
   useEffect(() => {
     if (orders.isEnd || pageLoad) return;
     if (inView) setPage(prev => prev + 1);
-  }, [inView]);
+  }, [inView, pageLoad, orders.isEnd]);
 
   useEffect(() => {
     if (orders.isEnd || pageLoad) return;

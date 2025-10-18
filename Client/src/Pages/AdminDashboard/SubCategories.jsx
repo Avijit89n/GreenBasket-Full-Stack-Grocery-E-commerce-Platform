@@ -65,7 +65,7 @@ const initialData = {
 }
 
 function SubCategories() {
-    const [ref, inView] = useInView({threshold: 1});
+    const [ref, inView] = useInView({threshold: 0});
 
     const navigate = useNavigate()
 
@@ -199,7 +199,7 @@ function SubCategories() {
         if (inView && !paginationLoader && !tableData.isEnd) {
             setPage(prev => prev + 1)
         }
-    }, [inView])
+    }, [inView, paginationLoader, tableData.isEnd])
 
     useEffect(() => {
         if (!tableData.isEnd) {

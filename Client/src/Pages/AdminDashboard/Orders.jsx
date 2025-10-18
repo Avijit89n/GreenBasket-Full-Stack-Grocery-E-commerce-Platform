@@ -21,7 +21,7 @@ export default function Orders() {
   const [page, setPage] = useState(1)
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
-  const { ref, inView } = useInView({ threshold: 1 })
+  const { ref, inView } = useInView({ threshold: 0 })
   const navigate = useNavigate()
 
   const fetchData = async () => {
@@ -48,7 +48,7 @@ export default function Orders() {
     if (inView && !data.isEnd && !loading) {
       setPage(prev => prev + 1)
     }
-  }, [inView])
+  }, [inView, loading, data.isEnd])
 
   useEffect(() => {
     if (!data.isEnd && !loading) fetchData();

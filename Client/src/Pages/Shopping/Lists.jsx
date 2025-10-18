@@ -142,7 +142,7 @@ function Lists() {
   const [data, setData] = useState({});
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false)
-  const { ref, inView } = useInView({ threshold: 1, })
+  const { ref, inView } = useInView({ threshold: 0, })
   const { categoryID } = useParams();
 
 
