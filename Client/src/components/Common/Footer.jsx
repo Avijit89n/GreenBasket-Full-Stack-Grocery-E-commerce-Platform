@@ -107,7 +107,7 @@ function Footer() {
             <div className="border-t border-gray-700 mt-8 pt-6 text-center text-sm text-gray-400">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <p>© {new Date().getFullYear()} GreenBasket. All rights reserved.</p>
-                    <p className="mt-2">Designed By ~Avijit</p>
+                    {/* <p className="mt-2">Designed By ~Avijit</p> */}
                 </div>
             </div>
         </footer>

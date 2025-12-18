@@ -9,7 +9,6 @@ import {
   Star,
   Zap,
   Target,
-  Globe,
   Clock
 } from "lucide-react";
 import {
@@ -113,8 +112,6 @@ const categoryColors = [
   "#BCBD22", // olive
   "#17BECF", // cyan
 ];
-
-
 
 
 const hourlyTraffic = [
